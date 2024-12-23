@@ -8,7 +8,7 @@
         <div class="row g-3 mb-5 mt-2">
             <div class="col-md-4">
                 <a href="{{ route('staff.index') }}" class="text-decoration-none">
-                    <div class="card shadow">
+                    <div class="card shadow" >
                         <div class="card-body">
                             <div class=" text-center">
                                 <i class="fa fa-users"></i>

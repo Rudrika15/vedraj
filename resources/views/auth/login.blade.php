@@ -25,16 +25,16 @@
         <div class="container py-4 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-6">
-                    <div class="card mt-4 rounded-3 text-black"
+                    <div class="card shadow mt-4 rounded-3 text-black"
                         style="background-image: url('images/background.png'); background-repeat: no-repeat;  background-position: center; background-position: center 10ch;">
                         <div class="row g-0">
                             <div class="col">
                                 <div class="card-body p-md-4 mx-md-4">
 
                                     <div class="text-center">
-                                        <img src="{{ asset('images/vedraj_logo.png') }}" style="width: 185px;"
-                                            alt="logo" class="rounded">
-                                        <h3 class="mt-1 mb-5 pb-1">LOGIN</h3>
+                                        <img src="{{ asset('images/vedraj_logo.png') }}" style="width: 185px; opacity: "
+                                            alt="logo" class="rounded ">
+                                        <h3 class="mt-1 mb-5 pb-1 ">LOGIN</h3>
                                     </div>
 
                                     <form action="{{ route('authenticate') }}" method="POST">
@@ -44,7 +44,8 @@
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="form2Example11">Email</label>
                                             <input type="email" name="email" id="form2Example11"
-                                                class="form-control" placeholder="Email Address" />
+                                                class="form-control" placeholder="Email Address"
+                                                style="opacity: 0.5;" />
                                             @error('email')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -53,7 +54,7 @@
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="form2Example22">Password</label>
                                             <input type="password" name="password" id="form2Example22"
-                                                placeholder="Password" class="form-control" />
+                                                placeholder="Password" style="opacity: 0.5;" class="form-control" />
                                         </div>
 
                                         <div class="text-center pt-1 mb-5 pb-1">

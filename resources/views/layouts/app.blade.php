@@ -18,7 +18,6 @@
 </head>
 
 <body class="bg-light">
-
     {{-- header --}}
     <nav class="navbar navbar-expand-md bg-primary mb-5" style="height: 65px;">
         <div class="container">
@@ -106,7 +105,7 @@
         </div>
     </nav>
 
-    <div class="container  p-5 mb-5">
+    <div class="container   p-5 mb-5">
         <div class="card shadow">
             <div class="card-body">
                 @yield('content')
