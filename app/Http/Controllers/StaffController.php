@@ -37,7 +37,8 @@ class StaffController extends Controller
             'email' => 'required | email | unique:users',
             'password' => 'required',
             'confirm_password' => 'required | same:password',
-            'mobile_no' => ' min:10 | max:10',
+            'address' => 'required',
+            'mobile_no' => 'required| min:10 | max:10',
         ]);
 
         $staff = new User();

@@ -67,7 +67,8 @@
             </div>
             <div class="form-group">
                 <label for="mobile_no">Mobile No</label>
-                <input type="number" value="{{ old('mobile_no') }}" class="form-control" id="mobile_no" name="mobile_no">
+                <input type="number" min="0" autocomplete="none" value="{{ old('mobile_no') }}"
+                    class="form-control" id="mobile_no" name="mobile_no">
                 @error('mobile_no')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

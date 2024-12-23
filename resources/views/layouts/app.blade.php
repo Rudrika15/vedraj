@@ -42,7 +42,7 @@
                     <li class="nav-item ">
                         <a class="nav-link @if (Str::is('branch*', Route::currentRouteName())) active @endif"
                             href="{{ route('branch.index') }}">
-                            <i class="fa fa-building"></i>
+                            <i class="fa fa-hospital"></i>
                             <span>Branches</span>
                         </a>
                     </li>
@@ -56,14 +56,14 @@
                     <li class="nav-item ">
                         <a class="nav-link @if (Str::is('disease*', Route::currentRouteName())) active @endif"
                             href="{{ route('disease.index') }}">
-                            <i class="fa fa-medkit"></i>
+                            <i class="fa fa-syringe"></i>
                             <span>Disease</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if (Str::is('product*', Route::currentRouteName())) active @endif"
                             href="{{ route('product.index') }}">
-                            <i class="fa fa-shop"></i>
+                            <i class="fa fa-pills"></i>
                             <span>Product</span>
                         </a>
                     </li>
@@ -81,7 +81,7 @@
                             <span>Video</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item ">
                         <a class="nav-link" href="{{ route('logout') }}">
                             <i class="fa fa-sign-out"></i>
                             <span>Logout</span>

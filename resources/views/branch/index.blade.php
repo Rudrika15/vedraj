@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="d-flex justify-content-between mb-3">
-            <div class="">
+        <div class=" d-flex justify-content-between mb-3">
+            <div>
                 <h3>Branches</h3>
             </div>
             <div>

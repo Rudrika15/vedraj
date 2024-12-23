@@ -29,6 +29,9 @@ footer .container-fluid {
     border-color: #643f36 !important;
     text-align: center !important;
 }
+.navbar-nav {
+    gap: 10px !important;
+}
 
 @media (max-width: 900px) and (min-width: 426px) {
     .navbar-nav .nav-item .nav-link span {

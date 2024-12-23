@@ -44,7 +44,7 @@
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="form2Example11">Email</label>
                                             <input type="email" name="email" id="form2Example11"
-                                                class="form-control" placeholder=" email address" />
+                                                class="form-control" placeholder="Email Address" />
                                             @error('email')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -53,7 +53,7 @@
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="form2Example22">Password</label>
                                             <input type="password" name="password" id="form2Example22"
-                                                class="form-control" />
+                                                placeholder="Password" class="form-control" />
                                         </div>
 
                                         <div class="text-center pt-1 mb-5 pb-1">
