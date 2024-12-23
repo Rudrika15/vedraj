@@ -1,0 +1,45 @@
+.toast {
+    opacity: 1 !important;
+}
+
+.bg-primary {
+    background-color: #fffbd5 !important;
+}
+
+footer .container-fluid {
+    position: static;
+    bottom: 0;
+    border-top: 1px solid rgb(235, 232, 232);
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: #643f36 !important;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #643f36 !important;
+    border-color: #643f36 !important;
+    text-align: center !important;
+}
+
+@media screen and (max-width: 426px) {
+    .navbar {
+        height: auto !important;
+    }
+
+    .navbar-brand {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin-top: 0 !important;
+    }
+    .navbar-brand img {
+        height: 100px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
