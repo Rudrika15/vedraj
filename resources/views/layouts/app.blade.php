@@ -81,6 +81,12 @@
                             <span>Video</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}">
+                            <i class="fa fa-sign-out"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
                     {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -100,7 +106,7 @@
         </div>
     </nav>
 
-    <div class="container  p-5">
+    <div class="container  p-5 mb-5">
         <div class="card shadow">
             <div class="card-body">
                 @yield('content')
@@ -109,7 +115,7 @@
     </div>
 
     <footer>
-        <div class="container-fluid ">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <p>Copyright &copy; Vedraj 2024</p>

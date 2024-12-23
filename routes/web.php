@@ -1,20 +1,23 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\VideoController;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('auth.login');
+})->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::post('authenticate', [AuthController::class, 'Authenticate'])->name('authenticate');
+Route::get('logout', [AuthController::class, 'Logout'])->name('logout');
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+
 
 Route::get('/login', function () {
     return view('login');
