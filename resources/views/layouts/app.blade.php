@@ -59,13 +59,15 @@
                             <span>Disease</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if (Str::is('product*', Route::currentRouteName())) active @endif"
-                            href="{{ route('product.index') }}">
-                            <i class="fa fa-pills"></i>
-                            <span>Product</span>
-                        </a>
-                    </li>
+                    @if (Auth::user()->role == 'admin' )
+                        <li class="nav-item">
+                            <a class="nav-link @if (Str::is('product*', Route::currentRouteName())) active @endif"
+                                href="{{ route('product.index') }}">
+                                <i class="fa fa-pills"></i>
+                                <span>Product</span>
+                            </a>
+                        </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link @if (Str::is('article*', Route::currentRouteName())) active @endif"
                             href="{{ route('article.index') }}">

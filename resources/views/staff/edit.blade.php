@@ -56,7 +56,7 @@
 
             <div class="form-group">
                 <label for="role">Role</label>
-                <select class="form-control" id="role" name="role">
+                <select class="form-select" id="role" name="role">
                     <option value="admin" {{ $staff->role == 'admin' ? 'selected' : '' }}>Admin</option>
                     <option value="manager" {{ $staff->role == 'manager' ? 'selected' : '' }}>Manager</option>
                     <option value="staff" {{ $staff->role == 'staff' ? 'selected' : '' }}>Staff</option>

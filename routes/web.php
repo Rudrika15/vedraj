@@ -19,7 +19,7 @@ Route::get('logout', [AuthController::class, 'Logout'])->name('logout');
 
 //add authentication middleware
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
