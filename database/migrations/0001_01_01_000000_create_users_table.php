@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('address');
             $table->string('mobile_no');
-            $table->enum('role', ['admin', 'manager', 'staff'])->default('staff');
+            $table->date('dob')->nullable();
+            $table->string('form_token')->nullable();
+            $table->enum('role', ['admin', 'manager', 'doctor', 'patient'])->default('patient');
             $table->rememberToken();
             $table->timestamps();
         });

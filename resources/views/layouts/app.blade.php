@@ -59,7 +59,7 @@
                             <span>Disease</span>
                         </a>
                     </li>
-                    @if (Auth::user()->role == 'admin' )
+                    @if (Auth::user()->role == 'admin')
                         <li class="nav-item">
                             <a class="nav-link @if (Str::is('product*', Route::currentRouteName())) active @endif"
                                 href="{{ route('product.index') }}">
@@ -68,20 +68,34 @@
                             </a>
                         </li>
                     @endif
-                    <li class="nav-item">
-                        <a class="nav-link @if (Str::is('article*', Route::currentRouteName())) active @endif"
-                            href="{{ route('article.index') }}">
-                            <i class="fa fa-newspaper"></i>
-                            <span>Article </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if (Str::is('video*', Route::currentRouteName())) active @endif"
-                            href="{{ route('video.index') }}">
-                            <i class="fa fa-video"></i>
-                            <span>Video</span>
-                        </a>
-                    </li>
+                    @if (Auth::user()->role == 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link @if (Str::is('article*', Route::currentRouteName())) active @endif"
+                                href="{{ route('article.index') }}">
+                                <i class="fa fa-newspaper"></i>
+                                <span>Article </span>
+                            </a>
+                        </li>
+                    @endif
+                    @if (Auth::user()->role == 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link @if (Str::is('video*', Route::currentRouteName())) active @endif"
+                                href="{{ route('video.index') }}">
+                                <i class="fa fa-video"></i>
+                                <span>Video</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if (Auth::user()->role == 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link @if (Str::is('notification*', Route::currentRouteName())) active @endif"
+                                href="{{ route('notification.index') }}">
+                                <i class="fa fa-bell"></i>
+                                <span>Notification</span>
+                            </a>
+                        </li>
+                    @endif
+
                     <li class="nav-item ">
                         <a class="nav-link" href="{{ route('logout') }}">
                             <i class="fa fa-sign-out"></i>

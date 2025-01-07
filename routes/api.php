@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\api\AppointmentController;
 use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\BranchController;
+use App\Http\Controllers\api\DiseaseController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\VideoController;
 use Illuminate\Http\Request;
@@ -23,3 +26,13 @@ Route::get('articles', [ArticleController::class, 'index']);
 
 //videos
 Route::get('videos', [VideoController::class, 'index']);
+
+//Branch 
+Route::get('/branches', [BranchController::class, 'index']);
+
+//diseases
+Route::get('diseases', [DiseaseController::class, 'index']);
+
+//Appointment
+Route::get('appointments', [AppointmentController::class, 'index']);
+Route::post('appointment/store', [AppointmentController::class, 'store']);

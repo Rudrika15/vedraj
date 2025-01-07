@@ -74,11 +74,19 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="mobile_no">Date Of Birth</label>
+                <input type="date" value="{{ old('dob') }}" class="form-control" id="dob" name="dob">
+                @error('dob')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="role">Role</label>
                 <select class="form-control" id="role" name="role">
                     <option value="admin">Admin</option>
                     <option value="manager">Manager</option>
-                    <option value="staff">Staff</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="patient">Patient</option>
                 </select>
                 @error('role')
                     <div class="text-danger">{{ $message }}</div>

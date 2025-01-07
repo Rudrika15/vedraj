@@ -158,6 +158,12 @@
                         <span>Project</span>
                     </a>
                 </li>
+                <li @if (Route::currentRouteName() == 'notification') class="current" @endif>
+                    <a href="#">
+                        <i class="ico fa fa-bell"></i>
+                        <span>Notification</span>
+                    </a>
+                </li>
 
                 <!-- demo of Dropdown menu -->
                 {{-- <li class="has-sub">

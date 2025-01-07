@@ -23,6 +23,7 @@
                         <th scope="col">Mobile</th>
                         <th scope="col">Address</th>
                         <th scope="col">Branch</th>
+                        <th scope="col">Date Of Birth </th>
                         <th scope="col">Role</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -35,7 +36,9 @@
                             <td>{{ $staff->email }}</td>
                             <td>{{ $staff->mobile_no }}</td>
                             <td>{{ $staff->address }}</td>
+
                             <td>{{ $staff->branch->branch_name ?? '' }}</td>
+                            <td>{{ $staff->dob }}</td>
                             <td>{{ $staff->role }}</td>
                             <td class="d-flex gap-2">
                                 <a href="{{ route('staff.edit', $staff->id) }}" class="btn btn-xs btn-primary">Edit</a>

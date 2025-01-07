@@ -53,6 +53,13 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="mobile_no">Date Of Birth</label>
+                <input type="date" value="{{ $staff->dob }}" class="form-control" id="dob" name="dob">
+                @error('dob')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
             <div class="form-group">
                 <label for="role">Role</label>
@@ -60,6 +67,8 @@
                     <option value="admin" {{ $staff->role == 'admin' ? 'selected' : '' }}>Admin</option>
                     <option value="manager" {{ $staff->role == 'manager' ? 'selected' : '' }}>Manager</option>
                     <option value="staff" {{ $staff->role == 'staff' ? 'selected' : '' }}>Staff</option>
+                    <option value="doctor" {{ $staff->role == 'doctor' ? 'selected' : '' }}>Doctor</option>
+                    <option value="patient" {{ $staff->role == 'patient' ? 'selected' : '' }}>Patient</option>
                 </select>
                 @error('role')
                     <div class="text-danger">{{ $message }}</div>

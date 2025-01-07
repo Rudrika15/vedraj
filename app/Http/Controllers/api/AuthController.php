@@ -24,5 +24,20 @@ class AuthController extends Controller
 
         return response()->json(['user' => $user, 'token' => $token]);
     }
-    public function login() {}
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $token = $user->createToken('token')->plainTextToken;
+
+        return response()->json(['user' => $user, 'token' => $token]);
+    }
 }

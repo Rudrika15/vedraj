@@ -39,6 +39,7 @@ class StaffController extends Controller
             'confirm_password' => 'required | same:password',
             'address' => 'required',
             'mobile_no' => 'required| min:10 | max:10',
+            'dob' => 'required',
         ]);
 
         $staff = new User();
@@ -49,6 +50,7 @@ class StaffController extends Controller
         $staff->address = $request->address;
         $staff->mobile_no = $request->mobile_no;
         $staff->role = $request->role;
+        $staff->dob = $request->dob;
         $staff->save();
 
         return redirect()->route('staff.index')->with('success', 'Staff created successfully.');
@@ -82,6 +84,8 @@ class StaffController extends Controller
             'name' => 'required',
             'email' => 'required | email | unique:users,email,' . $id,
             'mobile_no' => ' min:10 | max:10',
+            'address' => 'required',
+            'dob' => 'required',
         ]);
 
         $staff = User::find($id);
@@ -90,6 +94,7 @@ class StaffController extends Controller
         $staff->email = $request->email;
         $staff->address = $request->address;
         $staff->mobile_no = $request->mobile_no;
+        $staff->dob = $request->dob;
         $staff->role = $request->role;
         $staff->save();
 
