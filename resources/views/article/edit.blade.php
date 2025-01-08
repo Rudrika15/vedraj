@@ -28,7 +28,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="title">Title</label>
+                <label for="title">Article Title</label>
                 <input type="text" class="form-control" id="title" name="title"
                     value="{{ $article->title ?? old('title') }}">
                 @error('title')
@@ -36,7 +36,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="url">URL</label>
+                <label for="url">Article URL</label>
                 <input type="text" class="form-control" id="url" name="url"
                     value="{{ $article->url ?? old('url') }}">
                 @error('url')
@@ -45,7 +45,7 @@
             </div>
 
             <div class="form-group">
-                <label for="thumbnail">Image</label>
+                <label for="thumbnail">Article Image</label>
                 <br>
                 <img id="preview" src="{{ asset('images/articles/' . $article->thumbnail) }}"
                     style="max-width: 150px; max-height: 120px; margin-bottom: 10px; ">

@@ -86,7 +86,8 @@
                             </a>
                         </li>
                     @endif
-                    @if (Auth::user()->role == 'admin')
+
+                    @if (Auth::user()->role == 'Admin')
                         <li class="nav-item">
                             <a class="nav-link @if (Str::is('notification*', Route::currentRouteName())) active @endif"
                                 href="{{ route('notification.index') }}">

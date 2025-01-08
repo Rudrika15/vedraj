@@ -36,7 +36,7 @@ class ArticleController extends Controller
             'disease_id' => 'required',
             'title' => 'required',
             'url' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $article = new Article();

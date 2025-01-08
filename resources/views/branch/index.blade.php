@@ -17,10 +17,10 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Branch Name</th>
-                        <th scope="col">Branch PinCode</th>
-                        <th scope="col">Branch City</th>
-                        <th scope="col">Branch Mobile</th>
+                        <th scope="col"> Name</th>
+                        <th scope="col"> PinCode</th>
+                        <th scope="col"> City</th>
+                        <th scope="col"> Mobile</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>

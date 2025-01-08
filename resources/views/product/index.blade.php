@@ -19,6 +19,7 @@
                         <th scope="col">Product Name</th>
                         <th scope="col">Product Description</th>
                         <th scope="col">Amazon Link</th>
+                        <th scope="col">Thumbnail</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -30,6 +31,10 @@
                             <td>{{ $product->product_name }}</td>
                             <td>{{ $product->description }}</td>
                             <td>{{ $product->amazon_link }}</td>
+                            <td>
+                                <img src="{{ asset('images/products/' . $product->thumbnail) }}" width="120"
+                                    alt="">
+                            </td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <a href="{{ route('product.edit', $product->id) }}" class="btn btn-xs btn-primary">

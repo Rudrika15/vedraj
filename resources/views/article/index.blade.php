@@ -18,9 +18,9 @@
                     <tr>
                         <th>#</th>
                         <th scope="col">Disease Name</th>
-                        <th scope="col">Article Name</th>
+                        <th scope="col">Article Title</th>
                         <th scope="col">Article Image</th>
-                        <th scope="col">URL</th>
+                        <th scope="col">Article URL</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>

@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <form action="{{ route('product.update', $product->id) }}" method="POST">
+        <form action="{{ route('product.update', $product->id) }}" enctype="multipart/form-data" method="POST">
             @csrf
 
             <div class="form-group">
@@ -53,8 +53,26 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="thumbnail">Thumbnail</label>
+                <br>
+                <img id="preview" style="max-width: 150px; max-height: 120px; margin-bottom: 10px; "
+                    src="{{ asset('images/products/' . $product->thumbnail) }}">
+                <input type="file" class="form-control" id="thumbnail" name="thumbnail" onchange="previewFile(this)">
+                @error('thumbnail')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+
+    <script>
+        function previewFile(input) {
+            var preview = document.getElementById('preview');
+            preview.src = URL.createObjectURL(input.files[0]);
+            preview.style.display = "block";
+        }
+    </script>
 @endsection

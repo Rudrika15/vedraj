@@ -27,14 +27,14 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="title">Title</label>
+                <label for="title">Article Title</label>
                 <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
                 @error('title')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="url">URL</label>
+                <label for="url">Article URL</label>
                 <input type="text" class="form-control" id="url" name="url" value="{{ old('url') }}">
                 @error('url')
                     <div class="text-danger">{{ $message }}</div>
@@ -42,7 +42,7 @@
             </div>
 
             <div class="form-group">
-                <label for="thumbnail">Image</label>
+                <label for="thumbnail">Article Image</label>
                 <br>
                 <img id="preview" style="max-width: 150px; max-height: 120px; margin-bottom: 10px; display: none;">
                 <input type="file" class="form-control" id="thumbnail" name="thumbnail" onchange="previewFile(this)">

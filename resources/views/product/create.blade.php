@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <form action="{{ route('product.store') }}" method="POST">
+        <form action="{{ route('product.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
 
             <div class="form-group">
@@ -52,8 +52,28 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="thumbnail">Thumbnail</label>
+                <br>
+                <img id="preview" style="max-width: 150px; max-height: 120px; margin-bottom: 10px; display: none;">
+                <input type="file" class="form-control" id="thumbnail" name="thumbnail" onchange="previewFile(this)">
+                @error('thumbnail')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+    <script>
+        function previewFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#preview').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 @endsection

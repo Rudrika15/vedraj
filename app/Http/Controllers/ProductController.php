@@ -35,7 +35,8 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required',
             'description' => 'required',
-            'amazon_link' => 'required | regex:/.com/',
+            'amazon_link' => 'required',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         // return $request;
 
@@ -44,6 +45,13 @@ class ProductController extends Controller
         $product->product_name = $request->product_name;
         $product->description = $request->description;
         $product->amazon_link = $request->amazon_link;
+
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('products/images'), $filename);
+            $product->thumbnail = $filename;
+        }
         $product->save();
 
         return redirect()->route('product.index', $request->disease_id)->with('success', 'Product created successfully.');
@@ -75,7 +83,8 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required',
             'description' => 'required',
-            'amazon_link' => 'required | regex:/.com/',
+            'amazon_link' => 'required',
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         $product = Product::find($id);
@@ -83,6 +92,16 @@ class ProductController extends Controller
         $product->product_name = $request->product_name;
         $product->description = $request->description;
         $product->amazon_link = $request->amazon_link;
+
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            if (file_exists(public_path('images/products/' . $product->thumbnail))) {
+                unlink(public_path('images/products/' . $product->thumbnail));
+            }
+            $file->move(public_path('images/products'), $filename);
+            $product->thumbnail = $filename;
+        }
         $product->save();
 
         return redirect()->route('product.index', $request->disease_id)->with('success', 'Product updated successfully.');

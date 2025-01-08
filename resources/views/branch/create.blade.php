@@ -17,7 +17,7 @@
         @csrf
         <div class="container">
             <div class="form-group">
-                <label for="branch_name">Branch Name</label>
+                <label for="branch_name"> Name</label>
                 <input type="text" value="{{ old('branch_name') }}" class="form-control" id="branch_name"
                     name="branch_name" placeholder="Branch Name">
                 @error('branch_name')

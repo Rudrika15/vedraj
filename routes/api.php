@@ -18,6 +18,11 @@ Route::get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
+Route::post('checkMobile', [AuthController::class, 'checkMobile']);
+Route::post('checkPassword', [AuthController::class, 'checkPassword']);
+Route::post('checkBirthDate', [AuthController::class, 'checkBirthDate']);
+Route::post('newPatient', [AuthController::class, 'newPatient']);
+
 //product
 Route::get('products', [ProductController::class, 'index']);
 

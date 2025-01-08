@@ -35,7 +35,7 @@ class StaffController extends Controller
             'branch_id' => 'required',
             'name' => 'required',
             'email' => 'required | email | unique:users',
-            'password' => 'required',
+            'password' => 'required|min:6',
             'confirm_password' => 'required | same:password',
             'address' => 'required',
             'mobile_no' => 'required| min:10 | max:10',
@@ -81,11 +81,11 @@ class StaffController extends Controller
     {
         $request->validate([
             'branch_id' => 'required',
-            'name' => 'required',
+            'name' => 'required ',
             'email' => 'required | email | unique:users,email,' . $id,
             'mobile_no' => ' min:10 | max:10',
             'address' => 'required',
-            'dob' => 'required',
+            'dob' => 'required|before:today',
         ]);
 
         $staff = User::find($id);

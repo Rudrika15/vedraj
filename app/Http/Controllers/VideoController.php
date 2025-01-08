@@ -35,7 +35,7 @@ class VideoController extends Controller
             'disease_id' => 'required',
             'title' => 'required',
             'youtube_link' => 'required | regex:/.com/',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $video = new Video();

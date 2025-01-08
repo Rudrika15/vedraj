@@ -33,7 +33,7 @@ class DiseaseController extends Controller
             'disease_name' => 'required',
             'description' => 'required',
             'url' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $disease = new Disease();

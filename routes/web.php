@@ -15,12 +15,19 @@ Route::get('/', function () {
     return view('auth.login');
 })->name('login');
 
+Route::get('/seed', function () {
+    \Illuminate\Support\Facades\Artisan::call('db:seed');
+});
+Route::get('migrate-refresh', function () {
+    \Illuminate\Support\Facades\Artisan::call('migrate:refresh');
+});
+
 Route::post('authenticate', [AuthController::class, 'Authenticate'])->name('authenticate');
 Route::get('logout', [AuthController::class, 'Logout'])->name('logout');
 
 //add authentication middleware
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 

@@ -44,7 +44,7 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" value="{{ old('password') }}" autocomplete="new-password" class="form-control"
-                    id="password" name="password"
+                    id="password" autocomplete="new-password" name="password"
                     onfocus="if (this.hasAttribute('readonly')) { this.removeAttribute('readonly'); }">
                 @error('password')
                     <div class="text-danger">{{ $message }}</div>
@@ -52,8 +52,8 @@
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" value="{{ old('confirm_password') }}" class="form-control" id="confirm_password"
-                    name="confirm_password">
+                <input type="password" autocomplete="new-password" value="{{ old('confirm_password') }}"
+                    class="form-control" id="confirm_password" name="confirm_password">
                 @error('confirm_password')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -75,7 +75,8 @@
             </div>
             <div class="form-group">
                 <label for="mobile_no">Date Of Birth</label>
-                <input type="date" value="{{ old('dob') }}" class="form-control" id="dob" name="dob">
+                <input type="date" max="{{ date('Y-m-d', strtotime('-1 days')) }}" value="{{ old('dob') }}"
+                    class="form-control" id="dob" name="dob">
                 @error('dob')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
