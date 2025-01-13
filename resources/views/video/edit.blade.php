@@ -34,6 +34,14 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="title_hindi">Title Hindi</label>
+                <input type="text" value="{{ $video->title_hindi }}" class="form-control" id="title_hindi"
+                    name="title_hindi" placeholder="Enter title_hindi">
+                @error('title_hindi')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="youtube_link">Youtube Link</label>
                 <input type="text" value="{{ $video->youtube_link }}" class="form-control" id="youtube_link"
                     name="youtube_link" placeholder="Enter Youtube Link">

@@ -19,6 +19,7 @@
                         <th>#</th>
                         <th scope="col">Disease Name</th>
                         <th scope="col">Article Title</th>
+                        <th scope="col">Article Title Hindi</th>
                         <th scope="col">Article Image</th>
                         <th scope="col">Article URL</th>
                         <th scope="col">Action</th>
@@ -30,6 +31,7 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $article->disease->disease_name }}</td>
                             <td>{{ $article->title }}</td>
+                            <td>{{ $article->title_hindi }}</td>
                             <td>
                                 <img src="{{ asset('images/articles/' . $article->thumbnail) }}" width="120"
                                     alt="">

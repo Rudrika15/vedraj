@@ -22,9 +22,24 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="disease_name_hindi">Disease Name Hindi</label>
+                <input type="text" value="{{ old('disease_name_hindi') }}" class="form-control" id="disease_name_hindi"
+                    name="disease_name_hindi">
+                @error('disease_name_hindi')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
                 @error('description')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="description_hindi">Description Hindi</label>
+                <textarea class="form-control" id="description_hindi" name="description_hindi">{{ old('description_hindi') }}</textarea>
+                @error('description_hindi')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>

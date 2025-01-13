@@ -34,6 +34,7 @@ class VideoController extends Controller
         $request->validate([
             'disease_id' => 'required',
             'title' => 'required',
+            'title_hindi' => 'required',
             'youtube_link' => 'required | regex:/.com/',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -41,6 +42,7 @@ class VideoController extends Controller
         $video = new Video();
         $video->disease_id = $request->disease_id;
         $video->title = $request->title;
+        $video->title_hindi = $request->title_hindi;
         $video->youtube_link = $request->youtube_link;
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
@@ -79,12 +81,14 @@ class VideoController extends Controller
         $request->validate([
             'disease_id' => 'required',
             'title' => 'required',
+            'title_hindi' => 'required',
             'youtube_link' => 'required | regex:/.com/',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
         $video = Video::find($id);
         $video->disease_id = $request->disease_id;
         $video->title = $request->title;
+        $video->title_hindi = $request->title_hindi;
         $video->youtube_link = $request->youtube_link;
         if ($video->thumbnail && file_exists(public_path('images/' . $video->thumbnail))) {
             unlink(public_path('images/' . $video->thumbnail));

@@ -18,6 +18,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Disease Name</th>
                         <th scope="col">Title</th>
+                        <th scope="col">Title Hindi</th>
                         <th scope="col">Youtube Link</th>
                         <th scope="col">Image</th>
                         <th scope="col">Action</th>
@@ -29,6 +30,7 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $video->disease->disease_name }}</td>
                             <td>{{ $video->title }}</td>
+                            <td>{{ $video->title_hindi }}</td>
                             <td>{{ $video->youtube_link }}</td>
                             <td><img src="{{ asset('images/videos/' . $video->thumbnail) }}" width="120" alt="">
                             </td>

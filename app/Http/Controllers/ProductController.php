@@ -34,7 +34,9 @@ class ProductController extends Controller
     {
         $request->validate([
             'product_name' => 'required',
+            'product_name_hindi' => 'required',
             'description' => 'required',
+            'description_hindi' => 'required',
             'amazon_link' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
@@ -43,13 +45,15 @@ class ProductController extends Controller
         $product = new Product();
         $product->disease_id = $request->disease_id;
         $product->product_name = $request->product_name;
+        $product->product_name_hindi = $request->product_name_hindi;
         $product->description = $request->description;
+        $product->description_hindi = $request->description_hindi;
         $product->amazon_link = $request->amazon_link;
 
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('products/images'), $filename);
+            $file->move(public_path('images/products'), $filename);
             $product->thumbnail = $filename;
         }
         $product->save();
@@ -82,7 +86,9 @@ class ProductController extends Controller
     {
         $request->validate([
             'product_name' => 'required',
+            'product_name_hindi' => 'required',
             'description' => 'required',
+            'description_hindi' => 'required',
             'amazon_link' => 'required',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
@@ -90,7 +96,9 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->disease_id = $request->disease_id;
         $product->product_name = $request->product_name;
+        $product->product_name_hindi = $request->product_name_hindi;
         $product->description = $request->description;
+        $product->description_hindi = $request->description_hindi;
         $product->amazon_link = $request->amazon_link;
 
         if ($request->hasFile('thumbnail')) {

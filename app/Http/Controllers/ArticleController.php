@@ -35,6 +35,7 @@ class ArticleController extends Controller
         $request->validate([
             'disease_id' => 'required',
             'title' => 'required',
+            'title_hindi' => 'required',
             'url' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -42,6 +43,7 @@ class ArticleController extends Controller
         $article = new Article();
         $article->disease_id = $request->disease_id;
         $article->title = $request->title;
+        $article->title_hindi = $request->title_hindi;
         $article->url = $request->url;
         if ($request->thumbnail) {
             $article->thumbnail = time() . '.' . $request->thumbnail->extension();
@@ -78,6 +80,7 @@ class ArticleController extends Controller
         $request->validate([
             'disease_id' => 'required',
             'title' => 'required',
+            'title_hindi' => 'required',
             'url' => 'required',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -85,6 +88,7 @@ class ArticleController extends Controller
         $article = Article::find($id);
         $article->disease_id = $request->disease_id;
         $article->title = $request->title;
+        $article->title_hindi = $request->title_hindi;
         $article->url = $request->url;
         if ($request->thumbnail) {
             if ($article->thumbnail && file_exists(public_path('images/articles/' . $article->thumbnail))) {

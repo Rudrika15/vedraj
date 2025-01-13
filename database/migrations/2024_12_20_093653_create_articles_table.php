@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('disease_id');
             $table->string('title');
+            $table->string('title_hindi');
             $table->string('url');
             $table->string('thumbnail')->nullable();
             $table->timestamps();

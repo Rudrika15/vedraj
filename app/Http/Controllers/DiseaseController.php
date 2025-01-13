@@ -31,14 +31,18 @@ class DiseaseController extends Controller
     {
         $request->validate([
             'disease_name' => 'required',
+            'disease_name_hindi' => 'required',
             'description' => 'required',
+            'description_hindi' => 'required',
             'url' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $disease = new Disease();
         $disease->disease_name = $request->disease_name;
+        $disease->disease_name_hindi = $request->disease_name_hindi;
         $disease->description = $request->description;
+        $disease->description_hindi = $request->description_hindi;
         $disease->url = $request->url;
         if ($request->thumbnail) {
             $disease->thumbnail = time() . '.' . $request->thumbnail->extension();
@@ -76,14 +80,18 @@ class DiseaseController extends Controller
         // return $request;
         $request->validate([
             'disease_name' => 'required',
+            'disease_name_hindi' => 'required',
             'description' => 'required',
+            'description_hindi' => 'required',
             'url' => 'required',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $disease = Disease::find($request->id);
         $disease->disease_name = $request->disease_name;
+        $disease->disease_name_hindi = $request->disease_name_hindi;
         $disease->description = $request->description;
+        $disease->description_hindi = $request->description_hindi;
         $disease->url = $request->url;
 
         if ($request->thumbnail) {

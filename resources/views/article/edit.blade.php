@@ -36,6 +36,14 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="title_hindi">Article Title Hindi</label>
+                <input type="text" class="form-control" id="title_hindi" name="title_hindi"
+                    value="{{ $article->title_hindi ?? old('title_hindi') }}">
+                @error('title_hindi')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="url">Article URL</label>
                 <input type="text" class="form-control" id="url" name="url"
                     value="{{ $article->url ?? old('url') }}">

@@ -17,7 +17,9 @@
                         <th>#</th>
                         <th scope="col"> Disease Name </th>
                         <th scope="col">Product Name</th>
+                        <th scope="col">Product Name Hindi</th>
                         <th scope="col">Product Description</th>
+                        <th scope="col">Product Description Hindi</th>
                         <th scope="col">Amazon Link</th>
                         <th scope="col">Thumbnail</th>
                         <th scope="col">Action</th>
@@ -29,7 +31,9 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $product->disease->disease_name }}</td>
                             <td>{{ $product->product_name }}</td>
+                            <td>{{ $product->product_name_hindi }}</td>
                             <td>{{ $product->description }}</td>
+                            <td>{{ $product->description_hindi }}</td>
                             <td>{{ $product->amazon_link }}</td>
                             <td>
                                 <img src="{{ asset('images/products/' . $product->thumbnail) }}" width="120"
