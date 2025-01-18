@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $diseases = Disease::with('products')->get();
+        return  $diseases = Disease::with('products')->get();
         return Util::getSuccessMessage('Disease Wise Product List', $diseases);
     }
 }

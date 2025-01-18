@@ -4,7 +4,7 @@
     <div class="container">
         <div class="d-flex justify-content-between mb-3">
             <div class="">
-                <h3>Edit Staff</h3>
+                <h3>Edit User</h3>
             </div>
             <div class="">
                 <a href="{{ route('staff.index') }}" class="btn btn-primary">Back</a>

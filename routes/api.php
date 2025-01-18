@@ -23,21 +23,24 @@ Route::post('checkPassword', [AuthController::class, 'checkPassword']);
 Route::post('checkBirthDate', [AuthController::class, 'checkBirthDate']);
 Route::post('newPatient', [AuthController::class, 'newPatient']);
 
-//product
-Route::get('products', [ProductController::class, 'index']);
+Route::middleware(['auth:sanctum'])->group(function () {
 
-//Article
-Route::get('articles', [ArticleController::class, 'index']);
+    //product
+    Route::get('products', [ProductController::class, 'index']);
 
-//videos
-Route::get('videos', [VideoController::class, 'index']);
+    //Article
+    Route::get('articles/{id?}', [ArticleController::class, 'index']);
 
-//Branch 
-Route::get('/branches', [BranchController::class, 'index']);
+    //videos
+    Route::get('videos', [VideoController::class, 'index']);
 
-//diseases
-Route::get('diseases', [DiseaseController::class, 'index']);
+    //Branch 
+    Route::get('/branches', [BranchController::class, 'index']);
 
-//Appointment
-Route::get('appointments', [AppointmentController::class, 'index']);
-Route::post('appointment/store', [AppointmentController::class, 'store']);
+    //diseases
+    Route::get('diseases', [DiseaseController::class, 'index']);
+
+    //Appointment
+    Route::get('appointments', [AppointmentController::class, 'index']);
+    Route::post('appointment/store', [AppointmentController::class, 'store']);
+});

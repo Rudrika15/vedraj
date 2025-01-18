@@ -4,11 +4,11 @@
     <div class="container">
         <div class="d-flex justify-content-between mb-3">
             <div class="">
-                <h3>Staff</h3>
+                <h3>Users</h3>
             </div>
             <div class="margin-top-10">
                 <a href="{{ route('staff.create') }}" class="btn btn-sm btn-primary">
-                    Add Staff
+                    Add User
                 </a>
             </div>
         </div>

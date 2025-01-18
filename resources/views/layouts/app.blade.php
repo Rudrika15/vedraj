@@ -49,7 +49,7 @@
                         <a class="nav-link @if (Str::is('staff*', Route::currentRouteName())) active @endif"
                             href="{{ route('staff.index') }}">
                             <i class="fa fa-users"></i>
-                            <span>Staff</span>
+                            <span>Users</span>
                         </a>
                     </li>
                     <li class="nav-item ">
@@ -134,7 +134,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; Vedraj 2024</p>
+                    <p>Copyright &copy; Vaidraj {{ date('Y') }}</p>
                 </div>
             </div>
         </div>
