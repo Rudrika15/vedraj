@@ -23,14 +23,40 @@
             <div class="form-group">
                 <label for="pincode">Pincode</label>
                 <input type="number" class="form-control" id="pincode" name="pincode" value="{{ $branch->pincode }}">
+                @error('pincode')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="city">City</label>
                 <input type="text" class="form-control" id="city" name="city" value="{{ $branch->city }}">
+                @error('city')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" name="address" value="{{ $branch->address }}">
+                @error('address')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="address_hindi">Address Hindi</label>
+                <input type="text" class="form-control" id="address_hindi" name="address_hindi"
+                    value="{{ $branch->address_hindi }}">
+                @error('address_hindi')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label for="mobile_no">Mobile No</label>
-                <input type="number" class="form-control" id="mobile_no" name="mobile_no" value="{{ $branch->mobile_no }}">
+                <input type="number" class="form-control" id="mobile_no" name="mobile_no"
+                    value="{{ $branch->mobile_no }}">
+                @error('mobile_no')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>

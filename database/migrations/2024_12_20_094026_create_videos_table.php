@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('disease_id');
             $table->string('title');
             $table->string('title_hindi');
-            $table->string('youtube_link');
+            $table->mediumText('youtube_link');
             $table->string('thumbnail')->nullable();
             $table->timestamps();
         });

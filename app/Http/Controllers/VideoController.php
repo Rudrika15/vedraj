@@ -35,7 +35,7 @@ class VideoController extends Controller
             'disease_id' => 'required',
             'title' => 'required',
             'title_hindi' => 'required',
-            'youtube_link' => 'required | regex:/.com/',
+            'youtube_link' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
@@ -82,7 +82,7 @@ class VideoController extends Controller
             'disease_id' => 'required',
             'title' => 'required',
             'title_hindi' => 'required',
-            'youtube_link' => 'required | regex:/.com/',
+            'youtube_link' => 'required ',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
         $video = Video::find($id);

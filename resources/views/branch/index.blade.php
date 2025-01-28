@@ -17,9 +17,11 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col"> Name</th>
+                        <th scope="col">Branch Name</th>
                         <th scope="col"> PinCode</th>
                         <th scope="col"> City</th>
+                        <th scope="col"> Address</th>
+                        <th scope="col"> Address Hindi</th>
                         <th scope="col"> Mobile</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -31,6 +33,8 @@
                             <td>{{ $branch->branch_name }}</td>
                             <td>{{ $branch->pincode }}</td>
                             <td>{{ $branch->city }}</td>
+                            <td>{{ $branch->address }}</td>
+                            <td>{{ $branch->address_hindi }}</td>
                             <td>{{ $branch->mobile_no }}</td>
                             <td class="d-flex gap-2">
                                 <a href="{{ route('branch.edit', $branch->id) }}" class="btn btn-xs btn-primary">Edit</a>

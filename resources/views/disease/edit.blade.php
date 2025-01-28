@@ -44,6 +44,20 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="food_plan">food_plan</label>
+                <textarea class="form-control" id="food_plan" name="food_plan">{{ $disease->food_plan }}</textarea>
+                @error('food_plan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="food_plan_hindi">Food Plan Hindi</label>
+                <textarea class="form-control" id="food_plan_hindi" name="food_plan_hindi">{{ $disease->food_plan_hindi }}</textarea>
+                @error('food_plan_hindi')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="url">URL</label>
                 <input type="text" value="{{ $disease->url }}" class="form-control" id="url" name="url">
                 @error('url')

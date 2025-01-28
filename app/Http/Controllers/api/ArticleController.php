@@ -13,7 +13,7 @@ class ArticleController extends Controller
 {
     public function index($disease_id = 0)
     {
-        $language =  'hindi';
+        $language = Auth::user()->language;
 
         $diseaseHindiField = ['disease:*,disease_name_hindi as display_name,description_hindi as display_description'];
         $diseaseEngField = ['disease:*,disease_name as display_name,description as display_description'];
@@ -21,7 +21,7 @@ class ArticleController extends Controller
         $articalHindiField = ['*', 'title_hindi as display_name'];
         $articalEngField = ['*', 'title as display_name'];
 
-        if ($language == 'hindi') {
+        if ($language == 'hi') {
             $article = Article::with($diseaseHindiField)->select($articalHindiField);
         } else {
             $article = Article::with($diseaseEngField)->select($articalEngField);
@@ -30,7 +30,7 @@ class ArticleController extends Controller
         if ($disease_id != 0) {
             $article->where('disease_id', $disease_id);
         }
-        $article = $article->get();
+        $article = $article->orderBy('id', 'desc')->paginate(10);
 
         return Util::getSuccessMessage('Disease Wise Article List', $article);
     }

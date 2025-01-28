@@ -29,7 +29,7 @@
                     @foreach ($articles as $article)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $article->disease->disease_name }}</td>
+                            <td>{{ $article->disease->disease_name ?? '' }}</td>
                             <td>{{ $article->title }}</td>
                             <td>{{ $article->title_hindi }}</td>
                             <td>

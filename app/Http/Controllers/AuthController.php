@@ -53,14 +53,17 @@ class AuthController extends Controller
      */
     public function dashboard()
     {
-        $totalStaff = User::where('role', 'staff')->count();
+        $totalDoctors = User::where('role', 'doctor')->count();
+        $totalPatients = User::where('role', 'patient')->count();
+        $totalManagers = User::where('role', 'manager')->count();
+        $totalAdmins = User::where('role', 'admin')->count();
         $totalDiseases = Disease::all()->count();
         $totalProducts = Product::all()->count();
         $totalArticles = Article::all()->count();
         $totalVideos = Video::all()->count();
         $totalBranches = Branch::all()->count();
 
-        return view('dashboard', compact('totalStaff', 'totalDiseases', 'totalProducts', 'totalArticles', 'totalVideos', 'totalBranches'));
+        return view('dashboard', compact('totalAdmins', 'totalManagers', 'totalDoctors', 'totalPatients', 'totalDiseases', 'totalProducts', 'totalArticles', 'totalVideos', 'totalBranches'));
     }
 
     /**

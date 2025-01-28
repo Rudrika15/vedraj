@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Appointment extends Model
+class UserWisePermission extends Model
 {
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function prescriptions()
+    public function permission()
     {
-        return $this->hasMany(Prescription::class);
+        return $this->belongsTo(Permission::class);
     }
 }

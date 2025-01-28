@@ -66,7 +66,6 @@
                 <select class="form-select" id="role" name="role">
                     <option value="admin" {{ $staff->role == 'admin' ? 'selected' : '' }}>Admin</option>
                     <option value="manager" {{ $staff->role == 'manager' ? 'selected' : '' }}>Manager</option>
-                    <option value="staff" {{ $staff->role == 'staff' ? 'selected' : '' }}>Staff</option>
                     <option value="doctor" {{ $staff->role == 'doctor' ? 'selected' : '' }}>Doctor</option>
                     <option value="patient" {{ $staff->role == 'patient' ? 'selected' : '' }}>Patient</option>
                 </select>

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="d-flex justify-content-between mb-3">
             <div class="">
-                <h3>Create Video</h3>
+                <h3>Edit Video</h3>
             </div>
             <div class="">
                 <a href="{{ route('video.index') }}" class="btn btn-primary">Back</a>

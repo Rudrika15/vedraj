@@ -33,6 +33,8 @@ class BranchController extends Controller
             'branch_name' => 'required',
             'pincode' => 'required | min:6 | max:6',
             'city' => 'required',
+            'address' => 'required',
+            'address_hindi' => 'required',
             'mobile_no' => 'required | min:10 | max:10',
         ]);
 
@@ -40,6 +42,8 @@ class BranchController extends Controller
         $branch->branch_name = $request->branch_name;
         $branch->pincode = $request->pincode;
         $branch->city = $request->city;
+        $branch->address = $request->address;
+        $branch->address_hindi = $request->address_hindi;
         $branch->mobile_no = $request->mobile_no;
         $branch->save();
 
@@ -72,12 +76,16 @@ class BranchController extends Controller
             'branch_name' => 'required',
             'pincode' => 'required | min:6 | max:6',
             'city' => 'required',
+            'address' => 'required',
+            'address_hindi' => 'required',
             'mobile_no' => 'required | min:10 | max:10',
         ]);
         $branch = Branch::find($request->id);
         $branch->branch_name = $request->branch_name;
         $branch->pincode = $request->pincode;
         $branch->city = $request->city;
+        $branch->address = $request->address;
+        $branch->address_hindi = $request->address_hindi;
         $branch->mobile_no = $request->mobile_no;
         $branch->save();
 

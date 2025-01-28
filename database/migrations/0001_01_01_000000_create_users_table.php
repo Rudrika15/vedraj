@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('dob')->nullable();
             $table->string('form_token')->nullable();
             $table->enum('role', ['admin', 'manager', 'doctor', 'patient'])->default('patient');
+            $table->enum('language', ['en', 'hi'])->default('en');
             $table->rememberToken();
             $table->timestamps();
         });

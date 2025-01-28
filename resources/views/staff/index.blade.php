@@ -45,6 +45,8 @@
                                 <a href="{{ route('staff.delete', $staff->id) }}"
                                     data-url="{{ route('staff.delete', $staff->id) }}"
                                     class="btn btn-xs btn-danger delete-button">Delete</a>
+                                <a href="{{ route('user.permission', $staff->id) }}"
+                                    class="btn btn-xs btn-info">Permissions</a>
                             </td>
                         </tr>
                     @endforeach

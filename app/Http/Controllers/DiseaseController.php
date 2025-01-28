@@ -34,6 +34,8 @@ class DiseaseController extends Controller
             'disease_name_hindi' => 'required',
             'description' => 'required',
             'description_hindi' => 'required',
+            'food_plan' => 'required',
+            'food_plan_hindi' => 'required',
             'url' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -43,6 +45,8 @@ class DiseaseController extends Controller
         $disease->disease_name_hindi = $request->disease_name_hindi;
         $disease->description = $request->description;
         $disease->description_hindi = $request->description_hindi;
+        $disease->food_plan = $request->food_plan;
+        $disease->food_plan_hindi = $request->food_plan_hindi;
         $disease->url = $request->url;
         if ($request->thumbnail) {
             $disease->thumbnail = time() . '.' . $request->thumbnail->extension();
@@ -83,6 +87,8 @@ class DiseaseController extends Controller
             'disease_name_hindi' => 'required',
             'description' => 'required',
             'description_hindi' => 'required',
+            'food_plan' => 'required',
+            'food_plan_hindi' => 'required',
             'url' => 'required',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -92,6 +98,8 @@ class DiseaseController extends Controller
         $disease->disease_name_hindi = $request->disease_name_hindi;
         $disease->description = $request->description;
         $disease->description_hindi = $request->description_hindi;
+        $disease->food_plan = $request->food_plan;
+        $disease->food_plan_hindi = $request->food_plan_hindi;
         $disease->url = $request->url;
 
         if ($request->thumbnail) {

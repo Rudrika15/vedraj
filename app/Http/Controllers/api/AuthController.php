@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Utils\Util;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -113,8 +114,7 @@ class AuthController extends Controller
             $request->validate([
                 'mobile' => 'required',
                 'name' => 'required',
-                'email' => 'required',
-                'password' => 'required',
+                'email' => 'required|email|unique:users',
                 'birth_date' => 'required',
             ]);
 
@@ -125,7 +125,7 @@ class AuthController extends Controller
                 $user->name = $request->name;
                 $user->email = $request->email;
                 $user->mobile_no = $request->mobile;
-                $user->password = Hash::make($request->password);
+                $user->password = Hash::make(123456);
                 $user->address = $request->address;
                 $user->dob = $request->birth_date;
                 $user->save();
@@ -133,6 +133,18 @@ class AuthController extends Controller
             } else {
                 return Util::getErrorMessage('User Already Exist', $user);
             }
+        } catch (\Exception $e) {
+            return Util::getErrorMessage($e->getMessage());
+        }
+    }
+
+    public function updateLang(Request $request)
+    {
+        try {
+            $user = User::where('id', Auth::user()->id)->first();
+            $user->language = $request->lang;
+            $user->save();
+            return Util::getSuccessMessage('Language Updated Successfully', $user);
         } catch (\Exception $e) {
             return Util::getErrorMessage($e->getMessage());
         }

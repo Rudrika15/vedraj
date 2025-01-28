@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('branch_name');
             $table->integer('pincode');
             $table->string('city');
+            $table->mediumText('address');
+            $table->mediumText('address_hindi');
             $table->string('mobile_no');
             $table->timestamps();
         });

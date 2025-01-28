@@ -5,8 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\UserWisePermissionController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
@@ -86,6 +88,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notification/edit/{id}', [NotificationController::class, 'edit'])->name('notification.edit');
     Route::post('notification/update/{id}', [NotificationController::class, 'update'])->name('notification.update');
     Route::get('notification/delete/{id}', [NotificationController::class, 'destroy'])->name('notification.delete');
+
+    //permission crud
+    Route::get('/permission', [PermissionController::class, 'index'])->name('permission.index');
+    Route::get('/permission/create', [PermissionController::class, 'create'])->name('permission.create');
+    Route::post('permission/store', [PermissionController::class, 'store'])->name('permission.store');
+    Route::get('/permission/edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
+    Route::post('permission/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
+    Route::get('permission/delete/{id}', [PermissionController::class, 'destroy'])->name('permission.delete');
+
+
+    //userwise permission
+    Route::get('/userpermission/{id?}', [UserWisePermissionController::class, 'edit'])->name('user.permission');
+    Route::post('/userpermission/update/{id?}', [UserWisePermissionController::class, 'update'])->name('user.permission.update');
 });
 
 Route::middleware(['auth', 'role:manager'])->group(function () {
@@ -114,6 +129,8 @@ Route::middleware(['auth', 'role:manager'])->group(function () {
     Route::get('/disease/edit/{id}', [DiseaseController::class, 'edit'])->name('disease.edit');
     Route::post('disease/update/{id}', [DiseaseController::class, 'update'])->name('disease.update');
     Route::get('disease/delete/{id}', [DiseaseController::class, 'destroy'])->name('disease.delete');
+
+    
 
     // product routes
     // Route::get('/product', [ProductController::class, 'index'])->name('product.index');

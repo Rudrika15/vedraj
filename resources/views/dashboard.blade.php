@@ -8,13 +8,52 @@
         <div class="row g-3 mb-5 mt-2">
             <div class="col-md-4">
                 <a href="{{ route('staff.index') }}" class="text-decoration-none">
-                    <div class="card shadow" >
+                    <div class="card shadow">
                         <div class="card-body">
                             <div class=" text-center">
                                 <i class="fa fa-users"></i>
                             </div>
-                            <h5 class="card-title text-center">Total Staff</h5>
-                            <h5 class="card-text text-center">{{ $totalStaff }}</h5>
+                            <h5 class="card-title text-center">Total Admins</h5>
+                            <h5 class="card-text text-center">{{ $totalAdmins }}</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ route('staff.index') }}" class="text-decoration-none">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class=" text-center">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <h5 class="card-title text-center">Total Patients</h5>
+                            <h5 class="card-text text-center">{{ $totalPatients }}</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ route('staff.index') }}" class="text-decoration-none">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class=" text-center">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <h5 class="card-title text-center">Total Managers</h5>
+                            <h5 class="card-text text-center">{{ $totalManagers }}</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ route('staff.index') }}" class="text-decoration-none">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class=" text-center">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <h5 class="card-title text-center">Total Doctors</h5>
+                            <h5 class="card-text text-center">{{ $totalDoctors }}</h5>
                         </div>
                     </div>
                 </a>

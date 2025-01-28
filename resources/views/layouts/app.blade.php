@@ -70,6 +70,16 @@
                     @endif
                     @if (Auth::user()->role == 'admin')
                         <li class="nav-item">
+                            <a class="nav-link @if (Str::is('permission*', Route::currentRouteName())) active @endif"
+                                href="{{ route('permission.index') }}">
+                                <i class="fa fa-lock"></i>
+                                <span>Permissions</span>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if (Auth::user()->role == 'admin')
+                        <li class="nav-item">
                             <a class="nav-link @if (Str::is('article*', Route::currentRouteName())) active @endif"
                                 href="{{ route('article.index') }}">
                                 <i class="fa fa-newspaper"></i>
@@ -122,7 +132,7 @@
         </div>
     </nav>
 
-    <div class="container   p-5 mb-5">
+    <div class="container p-5 mb-5">
         <div class="card shadow">
             <div class="card-body">
                 @yield('content')

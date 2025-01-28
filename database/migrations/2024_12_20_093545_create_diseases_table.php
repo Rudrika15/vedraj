@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('disease_name');
             $table->string('disease_name_hindi');
-            $table->string('description');
-            $table->string('description_hindi');
+            $table->mediumText('description');
+            $table->mediumText('description_hindi');
+            $table->mediumText('food_plan');
+            $table->mediumText('food_plan_hindi');
             $table->string('url');
             $table->string('thumbnail')->nullable();
             $table->timestamps();

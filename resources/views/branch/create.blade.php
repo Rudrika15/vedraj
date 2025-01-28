@@ -41,9 +41,26 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" value="{{ old('address') }}" class="form-control" id="address" name="address"
+                    placeholder="Address">
+                @error('address')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="address_hindi">Address Hindi</label>
+                <input type="text" value="{{ old('address_hindi') }}" class="form-control" id="address_hindi"
+                    name="address_hindi" placeholder="Address Hindi">
+                @error('address_hindi')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label for="mobile_no">Mobile No</label>
-                <input type="number" value="{{ old('mobile_no') }}" min="0" autocomplete="none" class="form-control"
-                    id="mobile_no" name="mobile_no" placeholder="Mobile No">
+                <input type="number" value="{{ old('mobile_no') }}" min="0" autocomplete="none"
+                    class="form-control" id="mobile_no" name="mobile_no" placeholder="Mobile No">
                 @error('mobile_no')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

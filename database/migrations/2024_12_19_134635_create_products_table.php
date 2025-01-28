@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('disease_id');
             $table->string('product_name');
             $table->string('product_name_hindi');
-            $table->string('description');
-            $table->string('description_hindi');
+            $table->mediumText('description');
+            $table->mediumText('description_hindi');
             $table->longText('amazon_link');
             $table->string('thumbnail')->nullable();
             $table->timestamps();

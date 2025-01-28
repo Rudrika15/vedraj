@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('user_wise_permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('mobile');
-            $table->string('email');
-            $table->string('subject');
-            $table->mediumText('message');
+            $table->integer('user_id');
+            $table->integer('permission_id');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('user_wise_permissions');
     }
 };
