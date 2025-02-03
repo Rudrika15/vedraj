@@ -21,6 +21,7 @@
                         <th scope="col">Product Description</th>
                         <th scope="col">Product Description Hindi</th>
                         <th scope="col">Amazon Link</th>
+                        <th scope="col">On Amazon ? </th>
                         <th scope="col">Thumbnail</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -39,6 +40,7 @@
                             <td>{{ $product->description }}</td>
                             <td>{{ $product->description_hindi }}</td>
                             <td>{{ $product->amazon_link }}</td>
+                            <td>{{ $product->is_on_amazone }}</td>
                             <td>
                                 <img src="{{ asset('images/products/' . $product->thumbnail) }}" width="120"
                                     alt="">
@@ -62,7 +64,6 @@
             <div class="float-right" style="float: right">
                 {{ $products->links() }}
             </div>
-
         </div>
     </div>
 @endsection

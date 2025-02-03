@@ -68,6 +68,17 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="is_on_amazone">Is on Amazon</label>
+                <select class="form-select" id="is_on_amazone" name="is_on_amazone">
+                    <option value="yes" {{ old('is_on_amazone') == 'yes' ? 'selected' : '' }}>Yes</option>
+                    <option value="no" {{ old('is_on_amazone') == 'no' ? 'selected' : '' }}>No</option>
+                </select>
+                @error('is_on_amazone')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label for="thumbnail">Thumbnail</label>
                 <br>
                 <img id="preview" style="max-width: 150px; max-height: 120px; margin-bottom: 10px; display: none;">

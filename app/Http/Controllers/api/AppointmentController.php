@@ -73,6 +73,21 @@ class AppointmentController extends Controller
         }
     }
 
+    public function update()
+    {
+        $appointments = Appointment::where('status', 'pending')
+            ->where('date', '<', date('Y-m-d'))
+            ->get();
+
+        $appointments->each(function ($appointment) {
+            $appointment->update([
+                'status' => 'missed'
+            ]);
+        });
+
+        return Util::getSuccessMessage('Appointments updated successfully', $appointments);
+    }
+
     public function todayAppointments()
     {
         try {
@@ -94,10 +109,9 @@ class AppointmentController extends Controller
         }
     }
 
-    public function prescription(Request $request)
+    public function prescription(Request $request, $id = 0)
     {
         try {
-
             $request->validate([
                 'appointment_id' => 'required',
                 'note' => 'required',
@@ -111,8 +125,11 @@ class AppointmentController extends Controller
             if (Auth::user()->role != 'doctor') {
                 return Util::getErrorMessage('You are not a doctor', Auth::user());
             } else {
-
-                $prescription = new Prescription();
+                if ($id != 0) {
+                    $prescription = Prescription::find($id);
+                } else {
+                    $prescription = new Prescription();
+                }
                 $prescription->appointment_id = $request->appointment_id;
                 $prescription->doctor_id = Auth::user()->id;
                 $prescription->disease_id = $request->disease_id;
@@ -121,14 +138,30 @@ class AppointmentController extends Controller
                 $prescription->save();
 
                 // return $request->product_id . $request->time . $request->to_be_taken;
-                foreach ($request->medicine as $medicine) {
-                    $medicines = new PrescriptionMedicine();
-                    $medicines->prescription_id = $prescription->id;
-                    $medicines->product_id = $medicine['product_id'];
-                    $medicines->time = $medicine['time'];
-                    $medicines->to_be_taken = $medicine['to_be_taken'];
-                    $medicines->save();
+                if ($id == 0) {
+                    foreach ($request->medicine as $medicine) {
+                        $medicines = new PrescriptionMedicine();
+                        $medicines->prescription_id = $prescription->id;
+                        $medicines->product_id = $medicine['product_id'];
+                        $medicines->time = $medicine['time'];
+                        $medicines->to_be_taken = $medicine['to_be_taken'];
+                        $medicines->save();
+                    }
+                } else {
+                    if (count($request->medicine) == 0) {
+                        return Util::getErrorMessage('Please add medicines', $request->medicine);
+                    }
+                    PrescriptionMedicine::where('prescription_id', $id)->delete();
+                    foreach ($request->medicine as $medicine) {
+                        $medicines = new PrescriptionMedicine();
+                        $medicines->prescription_id = $id;
+                        $medicines->product_id = $medicine['product_id'];
+                        $medicines->time = $medicine['time'];
+                        $medicines->to_be_taken = $medicine['to_be_taken'];
+                        $medicines->save();
+                    }
                 }
+
                 $appointment = Appointment::find($request->appointment_id);
                 $appointment->status = 'completed';
                 $appointment->save();
@@ -205,35 +238,25 @@ class AppointmentController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function viewPrescription($id = 0)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        try {
+            if ($id == 0) {
+                $prescription = Prescription::with(['appointment' => function ($q) {
+                    $q->with('user');
+                }, 'medicines' => function ($q) {
+                    $q->with('products');
+                }, 'user', 'disease'])->get();
+            } else {
+                $prescription = Prescription::with(['appointment' => function ($q) {
+                    $q->with('user');
+                }, 'medicines' => function ($q) {
+                    $q->with('products');
+                }, 'user', 'disease'])->where('id', $id)->get();
+            }
+            return Util::getSuccessMessage('Prescription', $prescription);
+        } catch (\Exception $e) {
+            return Util::getErrorMessage('Something went wrong', $e);
+        }
     }
 }

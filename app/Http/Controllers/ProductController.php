@@ -39,6 +39,7 @@ class ProductController extends Controller
             'product_name_hindi' => 'required',
             'description' => 'required',
             'description_hindi' => 'required',
+
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         // return $request;
@@ -50,6 +51,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->description_hindi = $request->description_hindi;
         $product->amazon_link = $request->amazon_link;
+        $product->is_on_amazone = $request->is_on_amazone;
 
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
@@ -93,6 +95,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'disease_id' => 'required',
             'product_name' => 'required',
             'product_name_hindi' => 'required',
             'description' => 'required',
@@ -106,20 +109,27 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->description_hindi = $request->description_hindi;
         $product->amazon_link = $request->amazon_link;
+        $product->is_on_amazone = $request->is_on_amazone;
 
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            if (file_exists(public_path('images/products/' . $product->thumbnail))) {
-                unlink(public_path('images/products/' . $product->thumbnail));
+
+            // Check if the file exists and is not a directory
+            $filePath = public_path('images/products/' . $product->thumbnail);
+            if (file_exists($filePath) && !is_dir($filePath)) {
+                unlink($filePath);
             }
+
             $file->move(public_path('images/products'), $filename);
             $product->thumbnail = $filename;
         }
+
         $product->save();
 
+
         $existingDiseases = DiseaseProducts::where('product_id', $id)->pluck('disease_id')->toArray();
-        $newDiseases = array_diff($request->disease_id, $existingDiseases);
+        $newDiseases = array_diff((array)$request->disease_id, $existingDiseases);
         foreach ($newDiseases as $disease_id) {
             $dProducts = new DiseaseProducts();
             $dProducts->disease_id = $disease_id;

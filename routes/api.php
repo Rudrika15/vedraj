@@ -54,8 +54,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //Appointment
     Route::get('appointments', [AppointmentController::class, 'index']);
     Route::post('appointment/store', [AppointmentController::class, 'store']);
+    Route::get('appointment/update', [AppointmentController::class, 'update']);
     Route::get('todayAppointments', [AppointmentController::class, 'todayAppointments']);
-    Route::post('prescription', [AppointmentController::class, 'prescription']);
+    Route::post('prescription/{id?}', [AppointmentController::class, 'prescription']);
     Route::get('medicalHistory/{id?}', [AppointmentController::class, 'medicalHistory']);
     Route::get('myPatients', [AppointmentController::class, 'myPatients']);
 
@@ -63,4 +64,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('feedback', [FeedbackController::class, 'feedback']);
     Route::post('contact', [FeedbackController::class, 'contact']);
     Route::get('generatePdf/{id}', [DiseaseController::class, 'generatePdf']);
+
+    Route::get('viewPrescription/{id?}', [AppointmentController::class, 'viewPrescription']);
 });
