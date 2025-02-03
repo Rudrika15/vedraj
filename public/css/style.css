@@ -33,6 +33,21 @@ footer .container-fluid {
     gap: 10px !important;
 }
 
+/* .pagination .page-item {
+    background-color: #643f36 !important;
+    border-color: #643f36 !important;
+    color: #643f36 !important;
+} */
+.pagination .page-item.active .page-link {
+    background-color: #643f36 !important;
+    border-color: #643f36;
+    color: white !important;
+}
+
+.pagination .page-item .page-link {
+    color: #643f36 !important;
+}
+
 @media (max-width: 900px) and (min-width: 426px) {
     .navbar-nav .nav-item .nav-link span {
         display: none !important;

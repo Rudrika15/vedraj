@@ -15,4 +15,9 @@ class Appointment extends Model
     {
         return $this->hasMany(Prescription::class);
     }
+
+    public function diseases()
+    {
+        return $this->belongsTo(Disease::class, 'disease_id');
+    }
 }

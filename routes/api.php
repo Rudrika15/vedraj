@@ -5,8 +5,10 @@ use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\BranchController;
 use App\Http\Controllers\api\DiseaseController;
+use App\Http\Controllers\api\FeedbackController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\VideoController;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,4 +57,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('todayAppointments', [AppointmentController::class, 'todayAppointments']);
     Route::post('prescription', [AppointmentController::class, 'prescription']);
     Route::get('medicalHistory/{id?}', [AppointmentController::class, 'medicalHistory']);
+    Route::get('myPatients', [AppointmentController::class, 'myPatients']);
+
+    //Feedback and Contact Create
+    Route::post('feedback', [FeedbackController::class, 'feedback']);
+    Route::post('contact', [FeedbackController::class, 'contact']);
+    Route::get('generatePdf/{id}', [DiseaseController::class, 'generatePdf']);
 });

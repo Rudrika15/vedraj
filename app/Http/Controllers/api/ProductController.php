@@ -15,8 +15,8 @@ class ProductController extends Controller
     {
         $language = Auth::user()->language;
 
-        $diseaseHindiField = ['disease:*,disease_name_hindi as display_name,description_hindi as display_description'];
-        $diseaseEngField = ['disease:*,disease_name as display_name,description as display_description'];
+        $diseaseHindiField = ['diseaseProducts.diseases:*,disease_name_hindi as display_name,description_hindi as display_description'];
+        $diseaseEngField = ['diseaseProducts.diseases:*,disease_name as display_name,description as display_description'];
 
         $productHindiField = ['*', 'product_name_hindi as display_name', 'description_hindi as display_description'];
         $productEngField = ['*', 'product_name as display_name', 'description as display_description'];
@@ -27,10 +27,15 @@ class ProductController extends Controller
             $products = Product::with($diseaseEngField)->select($productEngField);
         }
 
+
         if ($id != 0) {
-            $products->where('disease_id', $id);
+            $products->where('id', $id);
         }
-        $products = $products->orderBy('id', 'desc')->paginate(10);
+        $currentPage = request()->get('current_page', 1);
+
+        $currentPage = max((int) $currentPage, 1);
+        $perPage = request()->get('per_page') ? request()->get('per_page') : PHP_INT_MAX;
+        $products = $products->orderBy('id', 'desc')->paginate($perPage, ['*'], 'page', $currentPage);
         return Util::getSuccessMessage('Disease Wise Product List', $products);
     }
 }

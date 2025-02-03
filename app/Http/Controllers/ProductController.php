@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Disease;
+use App\Models\DiseaseProducts;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
-        $diseases = Disease::all();
-        return view('product.index', compact('products', 'diseases'));
+        $products = Product::with('diseaseProducts.diseases')->paginate(10);
+
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -33,17 +34,17 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'disease_id' => 'required',
             'product_name' => 'required',
             'product_name_hindi' => 'required',
             'description' => 'required',
             'description_hindi' => 'required',
-            'amazon_link' => 'required',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         // return $request;
 
         $product = new Product();
-        $product->disease_id = $request->disease_id;
+        // $product->disease_id = $request->disease_id;
         $product->product_name = $request->product_name;
         $product->product_name_hindi = $request->product_name_hindi;
         $product->description = $request->description;
@@ -58,6 +59,12 @@ class ProductController extends Controller
         }
         $product->save();
 
+        foreach ($request->disease_id as $disease_id) {
+            $dProducts = new DiseaseProducts();
+            $dProducts->disease_id = $disease_id;
+            $dProducts->product_id = $product->id;
+            $dProducts->save();
+        }
         return redirect()->route('product.index', $request->disease_id)->with('success', 'Product created successfully.');
     }
 
@@ -75,8 +82,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
+        $diseaseProducts = DiseaseProducts::where('product_id', $id)->get();
         $diseases = Disease::all();
-        return view('product.edit', compact('product', 'diseases'));
+        return view('product.edit', compact('product', 'diseases', 'diseaseProducts'));
     }
 
     /**
@@ -89,12 +97,10 @@ class ProductController extends Controller
             'product_name_hindi' => 'required',
             'description' => 'required',
             'description_hindi' => 'required',
-            'amazon_link' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         $product = Product::find($id);
-        $product->disease_id = $request->disease_id;
+
         $product->product_name = $request->product_name;
         $product->product_name_hindi = $request->product_name_hindi;
         $product->description = $request->description;
@@ -111,6 +117,15 @@ class ProductController extends Controller
             $product->thumbnail = $filename;
         }
         $product->save();
+
+        $existingDiseases = DiseaseProducts::where('product_id', $id)->pluck('disease_id')->toArray();
+        $newDiseases = array_diff($request->disease_id, $existingDiseases);
+        foreach ($newDiseases as $disease_id) {
+            $dProducts = new DiseaseProducts();
+            $dProducts->disease_id = $disease_id;
+            $dProducts->product_id = $product->id;
+            $dProducts->save();
+        }
 
         return redirect()->route('product.index', $request->disease_id)->with('success', 'Product updated successfully.');
     }

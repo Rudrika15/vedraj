@@ -19,12 +19,12 @@
 
             <div class="form-group">
                 <label for="disease_id">Disease Name</label>
-                <select class="form-select" id="disease_id" name="disease_id">
-                    <option value="" selected disabled>Select Disease</option>
+                <select class="form-select select2" id="disease_id" name="disease_id[]" multiple>
                     @foreach ($diseases as $disease)
                         <option value="{{ $disease->id }}">{{ $disease->disease_name }}</option>
                     @endforeach
                 </select>
+
                 @error('disease_id')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

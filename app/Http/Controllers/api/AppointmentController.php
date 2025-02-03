@@ -20,7 +20,9 @@ class AppointmentController extends Controller
     public function index()
     {
         $userId = Auth::user()->id;
-        $appointments = Appointment::where('user_id', $userId)->get();
+        $appointments = Appointment::where('user_id', $userId)
+            ->orderBy('date', 'asc')
+            ->get();
         return Util::getSuccessMessage('All Appointments', $appointments);
     }
 
@@ -99,9 +101,11 @@ class AppointmentController extends Controller
             $request->validate([
                 'appointment_id' => 'required',
                 'note' => 'required',
-                'product_id' => 'required',
-                'time' => 'required',
-                'to_be_taken' => 'required',
+                'disease_id' => 'required',
+                'medicine' => 'required|array', // Ensure `medicine` is an array
+                'medicine.*.product_id' => 'required',
+                'medicine.*.time' => 'required',
+                'medicine.*.to_be_taken' => 'required',
             ]);
 
             if (Auth::user()->role != 'doctor') {
@@ -116,12 +120,18 @@ class AppointmentController extends Controller
                 $prescription->other_medicines = $request->other_medicines;
                 $prescription->save();
 
-                $medicines = new PrescriptionMedicine();
-                $medicines->prescription_id = $prescription->id;
-                $medicines->product_id = $request->product_id;
-                $medicines->time = $request->time;
-                $medicines->to_be_taken = $request->to_be_taken;
-                $medicines->save();
+                // return $request->product_id . $request->time . $request->to_be_taken;
+                foreach ($request->medicine as $medicine) {
+                    $medicines = new PrescriptionMedicine();
+                    $medicines->prescription_id = $prescription->id;
+                    $medicines->product_id = $medicine['product_id'];
+                    $medicines->time = $medicine['time'];
+                    $medicines->to_be_taken = $medicine['to_be_taken'];
+                    $medicines->save();
+                }
+                $appointment = Appointment::find($request->appointment_id);
+                $appointment->status = 'completed';
+                $appointment->save();
 
                 return Util::getSuccessMessage('Prescription added successfully', $prescription);
             }
@@ -136,18 +146,60 @@ class AppointmentController extends Controller
 
             $perPage = $request->get('per_page', PHP_INT_MAX);
             $currentPage = $request->get('current_page') ? $request->get('current_page') : 1;
-            $user = User::with(['appointments' => function ($q) {
-                $q->with('prescriptions', function ($q) {
+
+            $userPagination = User::with(['appointments' => function ($q) {
+                $q->with(['prescriptions' => function ($q) {
                     $q->with('user', 'medicines');
-                });
+                }, 'diseases']);
             }])->where('id', $userId)->paginate($perPage, ['*'], 'page', $currentPage);
+
+            $user = $userPagination->items()[0] ?? null;
+
             return Util::getSuccessMessage('Medical History', [
-                'data' => $user->items(),
-                'current_page' => $user->currentPage(),
-                'last_page' => $user->lastPage(),
-                'per_page' => $user->perPage(),
-                'total' => $user->total(),
+                'data' => $user,
+                'current_page' => $userPagination->currentPage(),
+                'last_page' => $userPagination->lastPage(),
+                'per_page' => $userPagination->perPage(),
+                'total' => $userPagination->total(),
             ]);
+        } catch (\Exception $e) {
+            return Util::getErrorMessage('Something went wrong', $e);
+        }
+    }
+
+    public function myPatients(Request $request)
+    {
+        try {
+            $Auth = Auth::user();
+            if ($Auth->role == 'admin' || $Auth->role == 'manager') {
+                if ($request->branch_id) {
+                    $prescription = Prescription::with(['appointment' => function ($q) use ($request) {
+                        $q->with(['diseases', 'user' => function ($q) use ($request) {
+                            $q->where('branch_id', $request->branch_id);
+                        }]);
+                    }])->orderBy('id', 'desc')->get();
+                } else {
+                    $prescription = Prescription::with(['appointment' => function ($q) {
+                        $q->with('diseases', 'user');
+                    }])->orderBy('id', 'desc')->get();
+                }
+
+                return Util::getSuccessMessage('Patient List', $prescription);
+            } else {
+                $prescription = Prescription::where('doctor_id', $Auth->id)
+                    ->with(['appointment' => function ($q) {
+                        $q->with('diseases');
+                    }])->get();
+            }
+
+            // $patients = [];
+            // foreach ($prescription as $key => $value) {
+            //     $patients[] = [
+            //         'patient' => $value->appointment->user,
+            //         'prescription' => $value
+            //     ];
+            // }
+            return Util::getSuccessMessage('Patient List', $prescription);
         } catch (\Exception $e) {
             return Util::getErrorMessage('Something went wrong', $e);
         }

@@ -10,4 +10,8 @@ class Product extends Model
     {
         return $this->belongsTo(Disease::class);
     }
+    public function diseaseProducts()
+    {
+        return $this->hasMany(DiseaseProducts::class);
+    }
 }

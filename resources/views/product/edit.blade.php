@@ -19,11 +19,12 @@
 
             <div class="form-group">
                 <label for="disease_id">Disease Name</label>
-                <select class="form-select" id="disease_id" name="disease_id">
-                    <option value="" selected disabled>Select Disease</option>
+                <select class="form-select select2" multiple id="disease_id" name="disease_id[]">
                     @foreach ($diseases as $disease)
-                        <option value="{{ $disease->id }}" {{ $product->disease_id == $disease->id ? 'selected' : '' }}>
-                            {{ $disease->disease_name }}</option>
+                        <option value="{{ $disease->id }}"
+                            {{ in_array($disease->id, $diseaseProducts->pluck('disease_id')->toArray()) ? 'selected' : '' }}>
+                            {{ $disease->disease_name }}
+                        </option>
                     @endforeach
                 </select>
                 @error('disease_id')

@@ -4,9 +4,12 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Disease;
+use App\Models\Prescription;
 use App\Utils\Util;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class DiseaseController extends Controller
 {
@@ -46,6 +49,27 @@ class DiseaseController extends Controller
                 'per_page' => $diseases->perPage(),
                 'total' => $diseases->total(),
             ]);
+        } catch (\Exception $e) {
+            return Util::getErrorMessage($e->getMessage());
+        }
+    }
+
+    public function generatePdf($id)
+    {
+        try {
+            $prescription = Prescription::with(['appointment' => function ($q) {
+                $q->with('user');
+            }, 'medicines' => function ($q) {
+                $q->with('products');
+            }, 'user', 'disease'])->where('id', $id)->first();
+            $imagePath = public_path('images/background.png');
+            $imageData = base64_encode(File::get($imagePath));
+            $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
+            $base64Image = "data:image/{$imageType};base64,{$imageData}";
+
+            $pdf = Pdf::loadView('pdf.prescription', compact('prescription', 'base64Image'));
+
+            return $pdf->download('prescription.pdf');
         } catch (\Exception $e) {
             return Util::getErrorMessage($e->getMessage());
         }

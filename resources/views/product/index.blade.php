@@ -29,7 +29,11 @@
                     @foreach ($products as $product)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $product->disease->disease_name ?? '' }}</td>
+                            <td>
+                                @foreach ($product->diseaseProducts as $disease)
+                                    {{ $disease->diseases->disease_name ?? '' }},
+                                @endforeach
+                            </td>
                             <td>{{ $product->product_name }}</td>
                             <td>{{ $product->product_name_hindi }}</td>
                             <td>{{ $product->description }}</td>
@@ -55,6 +59,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="float-right" style="float: right">
+                {{ $products->links() }}
+            </div>
 
         </div>
     </div>
