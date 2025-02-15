@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StaffController extends Controller
 {
@@ -94,6 +95,7 @@ class StaffController extends Controller
         $staff->email = $request->email;
         $staff->address = $request->address;
         $staff->mobile_no = $request->mobile_no;
+        $staff->password = Hash::make($request->password);
         $staff->dob = $request->dob;
         $staff->role = $request->role;
         $staff->save();

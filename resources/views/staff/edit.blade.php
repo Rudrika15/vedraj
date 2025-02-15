@@ -54,6 +54,13 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="password">Change Password</label>
+                <input type="text" class="form-control" id="password" name="password" value="{{ old('password') }}">
+                @error('password')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="mobile_no">Date Of Birth</label>
                 <input type="date" value="{{ $staff->dob }}" class="form-control" id="dob" name="dob">
                 @error('dob')

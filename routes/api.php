@@ -66,4 +66,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('generatePdf/{id}', [DiseaseController::class, 'generatePdf']);
 
     Route::get('viewPrescription/{id?}', [AppointmentController::class, 'viewPrescription']);
+    Route::post('profileUpdate', [AuthController::class, 'profileUpdate']);
 });

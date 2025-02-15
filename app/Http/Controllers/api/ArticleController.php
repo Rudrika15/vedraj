@@ -30,7 +30,11 @@ class ArticleController extends Controller
         if ($disease_id != 0) {
             $article->where('disease_id', $disease_id);
         }
-        $article = $article->orderBy('id', 'desc')->paginate(10);
+        $currentPage = request()->get('current_page', 1);
+
+        $currentPage = max((int) $currentPage, 1);
+        $perPage = request()->get('per_page') ? request()->get('per_page') : PHP_INT_MAX;
+        $article = $article->orderBy('id', 'desc')->paginate($perPage, ['*'], 'page', $currentPage);
 
         return Util::getSuccessMessage('Disease Wise Article List', $article);
     }

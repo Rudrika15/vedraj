@@ -215,6 +215,7 @@
             });
         </script>
     @endif
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Listen for clicks on delete buttons
@@ -243,6 +244,7 @@
             });
         });
     </script>
+
     <script>
         $(document).ready(function() {
             $('.select2').select2();

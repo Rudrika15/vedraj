@@ -17,11 +17,11 @@
                         <th>#</th>
                         <th scope="col"> Disease Name </th>
                         <th scope="col">Product Name</th>
-                        <th scope="col">Product Name Hindi</th>
+                        {{-- <th scope="col">Product Name Hindi</th>
                         <th scope="col">Product Description</th>
-                        <th scope="col">Product Description Hindi</th>
+                        <th scope="col">Product Description Hindi</th> --}}
                         <th scope="col">Amazon Link</th>
-                        <th scope="col">On Amazon ? </th>
+                        {{-- <th scope="col">On Amazon ? </th> --}}
                         <th scope="col">Thumbnail</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -36,11 +36,11 @@
                                 @endforeach
                             </td>
                             <td>{{ $product->product_name }}</td>
-                            <td>{{ $product->product_name_hindi }}</td>
+                            {{-- <td>{{ $product->product_name_hindi }}</td>
                             <td>{{ $product->description }}</td>
-                            <td>{{ $product->description_hindi }}</td>
+                            <td>{{ $product->description_hindi }}</td> --}}
                             <td>{{ $product->amazon_link }}</td>
-                            <td>{{ $product->is_on_amazone }}</td>
+                            {{-- <td>{{ $product->is_on_amazone }}</td> --}}
                             <td>
                                 <img src="{{ asset('images/products/' . $product->thumbnail) }}" width="120"
                                     alt="">
@@ -54,6 +54,9 @@
                                         data-url="{{ route('product.delete', $product->id) }}"
                                         class="btn btn-xs btn-danger delete-button">
                                         Delete
+                                    </a>
+                                    <a href="{{ route('product.show', $product->id) }}" class="btn btn-xs btn-info">
+                                        View
                                     </a>
                                 </div>
                             </td>

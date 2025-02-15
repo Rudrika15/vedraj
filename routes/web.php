@@ -20,9 +20,24 @@ Route::get('/', function () {
 Route::get('/seed', function () {
     \Illuminate\Support\Facades\Artisan::call('db:seed');
 });
-Route::get('migrate-refresh', function () {
-    \Illuminate\Support\Facades\Artisan::call('migrate:refresh');
+
+
+Route::get('cache-clear', function () {
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
 });
+
+Route::get('config-cache', function () {
+    \Illuminate\Support\Facades\Artisan::call('config:cache');
+});
+
+Route::get('view-clear', function () {
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+});
+
+Route::get('route-clear', function () {
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
+});
+
 
 Route::post('authenticate', [AuthController::class, 'Authenticate'])->name('authenticate');
 Route::get('logout', [AuthController::class, 'Logout'])->name('logout');
@@ -30,7 +45,9 @@ Route::get('logout', [AuthController::class, 'Logout'])->name('logout');
 //add authentication middleware
 
 Route::middleware(['auth'])->group(function () {
-
+    Route::get('migrate-refresh', function () {
+        \Illuminate\Support\Facades\Artisan::call('migrate:refresh');
+    });
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
     //Branch routes
@@ -51,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Disease Routes
     Route::get('/disease', [DiseaseController::class, 'index'])->name('disease.index');
+    Route::get('/disease/show/{id}', [DiseaseController::class, 'show'])->name('disease.show');
     Route::get('/disease/create', [DiseaseController::class, 'create'])->name('disease.create');
     Route::post('/disease/store', [DiseaseController::class, 'store'])->name('disease.store');
     Route::get('/disease/edit/{id}', [DiseaseController::class, 'edit'])->name('disease.edit');
@@ -59,6 +77,7 @@ Route::middleware(['auth'])->group(function () {
 
     // product routes
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/product/show/{id}', [ProductController::class, 'show'])->name('product.show');
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product/store/index', [ProductController::class, 'store'])->name('product.store');
     Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
@@ -130,7 +149,7 @@ Route::middleware(['auth', 'role:manager'])->group(function () {
     Route::post('disease/update/{id}', [DiseaseController::class, 'update'])->name('disease.update');
     Route::get('disease/delete/{id}', [DiseaseController::class, 'destroy'])->name('disease.delete');
 
-    
+
 
     // product routes
     // Route::get('/product', [ProductController::class, 'index'])->name('product.index');

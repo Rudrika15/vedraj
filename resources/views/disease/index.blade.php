@@ -21,10 +21,10 @@
                         <th scope="col">#</th>
                         <th scope="col">Disease Name</th>
                         <th scope="col">Disease Name Hindi</th>
-                        <th scope="col">Description</th>
+                        {{-- <th scope="col">Description</th>
                         <th scope="col">Description Hindi</th>
                         <th scope="col">Food Plan</th>
-                        <th scope="col">Food Plan Hindi</th>
+                        <th scope="col">Food Plan Hindi</th> --}}
                         <th scope="col">URL</th>
                         <th scope="col">Thumbnail</th>
                         <th scope="col">Actions</th>
@@ -36,10 +36,10 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $disease->disease_name }}</td>
                             <td>{{ $disease->disease_name_hindi }}</td>
-                            <td>{{ $disease->description }}</td>
+                            {{-- <td>{{ $disease->description }}</td>
                             <td>{{ $disease->description_hindi }}</td>
                             <td>{{ $disease->food_plan }}</td>
-                            <td>{{ $disease->food_plan_hindi }}</td>
+                            <td>{{ $disease->food_plan_hindi }}</td> --}}
                             <td>{{ $disease->url }}</td>
                             <td><img src="{{ asset('images/diseases/' . $disease->thumbnail) }}" width="120"
                                     alt=""></td>
@@ -54,6 +54,9 @@
                                         class="btn btn-xs btn-danger delete-button">
                                         Delete
                                     </a>
+                                    <a href="{{ route('disease.show', $disease->id) }}"
+                                        class="btn btn-xs btn-info">View</a><a
+                                        href="{{ route('disease.show', $disease->id) }}"></a>
                                 </div>
                             </td>
                         </tr>

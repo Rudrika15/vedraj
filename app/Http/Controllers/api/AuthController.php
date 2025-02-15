@@ -8,6 +8,7 @@ use App\Utils\Util;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -145,6 +146,34 @@ class AuthController extends Controller
             $user->language = $request->lang;
             $user->save();
             return Util::getSuccessMessage('Language Updated Successfully', $user);
+        } catch (\Exception $e) {
+            return Util::getErrorMessage($e->getMessage());
+        }
+    }
+
+    public function profileUpdate(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'branch_id' => 'required',
+                'address' => 'required',
+                'dob' => 'required',
+                'email' => 'required|email',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->messages()], 422);
+            }
+            $user = User::where('id', Auth::user()->id)->first();
+            $user->name = $request->name;
+            $user->branch_id = $request->branch_id;
+            $user->address = $request->address;
+            $user->dob  = $request->dob;
+            $user->email = $request->email;
+            $user->save();
+
+            return Util::getSuccessMessage('Profile Updated Successfully', $user);
         } catch (\Exception $e) {
             return Util::getErrorMessage($e->getMessage());
         }
