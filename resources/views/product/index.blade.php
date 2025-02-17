@@ -6,8 +6,17 @@
             <div class="">
                 <h3>Products</h3>
             </div>
-            <div class="">
-                <a href="{{ route('product.create', request()->id) }}" class="btn btn-primary">Add Product</a>
+            <div class="d-flex gap-3">
+                <form action="{{ route('product.index') }}" method="GET" class="d-flex gap-3">
+                    @csrf
+                    <input type="text" name="search" value="{{ request()->search }}" id="search" placeholder="Search" class="form-control">
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </form>
+
+                <div class="">
+
+                    <a href="{{ route('product.create', request()->id) }}" class="btn btn-primary">Add Product</a>
+                </div>
             </div>
         </div>
         <div class="table table-responsive">
@@ -47,6 +56,9 @@
                             </td>
                             <td>
                                 <div class="d-flex gap-2">
+                                    <a href="{{ route('product.show', $product->id) }}" class="btn btn-xs btn-info">
+                                        View
+                                    </a>
                                     <a href="{{ route('product.edit', $product->id) }}" class="btn btn-xs btn-primary">
                                         Edit
                                     </a>
@@ -55,9 +67,7 @@
                                         class="btn btn-xs btn-danger delete-button">
                                         Delete
                                     </a>
-                                    <a href="{{ route('product.show', $product->id) }}" class="btn btn-xs btn-info">
-                                        View
-                                    </a>
+
                                 </div>
                             </td>
                         </tr>

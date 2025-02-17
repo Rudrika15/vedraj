@@ -15,9 +15,9 @@ class BranchController extends Controller
 
 
         if ($id != 0) {
-            $branches = Branch::where('id', $id)->orderBy('id', 'desc')->get();
+            $branches = Branch::where('id', $id)->orderBy('branch_name', 'asc')->get();
         } else {
-            $branches = Branch::orderBy('id', 'desc')->get();
+            $branches = Branch::orderBy('branch_name', 'asc')->get();
         }
 
         return Util::getSuccessMessage('Branch List', $branches);
@@ -32,20 +32,21 @@ class BranchController extends Controller
                 $englishFields = ['*', 'address as display_address'];
                 if ($language == 'hi') {
                     $branches = Branch::select($hindiFields)
-                        ->orderBy('id', 'desc')
+                        ->orderBy('branch_name', 'asc')
                         ->get();;
                 } else {
                     $branches = Branch::select($englishFields)
-                        ->orderBy('id', 'desc')
+                        ->orderBy('branch_name', 'asc')
                         ->get();
                 }
             } else {
                 if ($id != 0) {
-                    $branches = Branch::where('id', $id)->orderBy('id', 'desc')->get();
+                    $branches = Branch::where('id', $id)->orderBy('branch_name', 'asc')->get();
                 } else {
-                    $branches = Branch::orderBy('id', 'desc')->get();
+                    $branches = Branch::orderBy('branch_name', 'asc')->get();
                 }
             }
+            
             return Util::getSuccessMessage('Branch Listsssss', $branches);
         } catch (\Exception $e) {
             return Util::getErrorMessage('Something went wrong', $e);

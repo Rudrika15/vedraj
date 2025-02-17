@@ -45,7 +45,9 @@
                                     alt=""></td>
                             <td>
                                 <div class="d-flex gap-2">
-
+                                    <a href="{{ route('disease.show', $disease->id) }}"
+                                        class="btn btn-xs btn-info">View</a><a
+                                        href="{{ route('disease.show', $disease->id) }}"></a>
                                     <a href="{{ route('disease.edit', $disease->id) }}" class="btn btn-xs btn-primary">
                                         Edit
                                     </a>
@@ -54,9 +56,7 @@
                                         class="btn btn-xs btn-danger delete-button">
                                         Delete
                                     </a>
-                                    <a href="{{ route('disease.show', $disease->id) }}"
-                                        class="btn btn-xs btn-info">View</a><a
-                                        href="{{ route('disease.show', $disease->id) }}"></a>
+
                                 </div>
                             </td>
                         </tr>

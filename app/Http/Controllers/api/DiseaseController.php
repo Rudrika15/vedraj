@@ -40,7 +40,7 @@ class DiseaseController extends Controller
             $perPage = request()->get('per_page') ? request()->get('per_page') : PHP_INT_MAX;
 
             // Apply pagination with the desired page number
-            $diseases = $diseases->orderBy('id', 'desc')->paginate($perPage, ['*'], 'page', $currentPage);
+            $diseases = $diseases->orderBy('disease_name', 'asc')->paginate($perPage, ['*'], 'page', $currentPage);
 
             return Util::getSuccessMessage('Disease List', [
                 'data' => $diseases->items(), // Actual records
@@ -66,7 +66,7 @@ class DiseaseController extends Controller
             $imageData = base64_encode(File::get($imagePath));
             $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
             $base64Image = "data:image/{$imageType};base64,{$imageData}";
-
+            // return view('pdf.prescription', compact('prescription', 'base64Image'));
             $pdf = Pdf::loadView('pdf.prescription', compact('prescription', 'base64Image'));
 
             return $pdf->download('prescription.pdf');

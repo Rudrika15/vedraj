@@ -18,7 +18,7 @@
     <main>
 
         <div class="container mt-5">
-            <div class="card shadow"
+            <div class="card "
                 style="background-image: url('{{ $base64Image }}'); background-repeat: no-repeat; background-position: center 10ch;">
                 <div class="card-header">
                     <div class="">
@@ -30,23 +30,25 @@
                         <div class="col">
                             <h3>Doctor Details</h3>
                             <hr>
-                            <p>Doctor Name: {{ $prescription->user->name }}</p>
+                            <p>Doctor Name: {{ $prescription->user->name ?? '' }}</p>
                         </div>
                         <div class="col">
                             <h3>Patient Details</h3>
                             <hr>
-                            <p>Name: {{ $prescription->appointment->name ?? $prescription->appointment->user->name }}
+                            <p>Name:
+                                {{ $prescription->appointment->name ?? ($prescription->appointment->user->name ?? '') }}
                             </p>
                             <p>Date Of Birth:
-                                {{ $prescription->appointment->dob ?? $prescription->appointment->user->dob }}
+                                {{ $prescription->appointment->dob ?? ($prescription->appointment->user->dob ?? '') }}
                             </p>
                             <p>Address:
-                                {{ $prescription->appointment->address ?? $prescription->appointment->user->address }}
+                                {{ $prescription->appointment->address ?? ($prescription->appointment->user->address ?? '') }}
                             </p>
                             <p>Phone:
-                                {{ $prescription->appointment->contact ?? $prescription->appointment->user->mobile_no }}
+                                {{ $prescription->appointment->contact ?? ($prescription->appointment->user->mobile_no ?? '') }}
                             </p>
-                            <p>Email: {{ $prescription->appointment->email ?? $prescription->appointment->user->email }}
+                            <p>Email:
+                                {{ $prescription->appointment->email ?? ($prescription->appointment->user->email ?? '') }}
                             </p>
                         </div>
                     </div>
@@ -54,13 +56,13 @@
                         <div class="col">
                             <h3>Appointment Details</h3>
                             <hr>
-                            <p>Date: {{ $prescription->appointment->date }}
+                            <p>Date: {{ $prescription->appointment->date ?? '' }}
                             </p>
-                            <p>slot: {{ $prescription->appointment->slot }}</p>
+                            <p>slot: {{ $prescription->appointment->slot ?? '' }}</p>
                             <p>subject: {{ $prescription->appointment->subject }}</p>
                             <p>message: {{ $prescription->appointment->message }}</p>
                         </div>
-                        <div class="col">
+                        {{-- <div class="col">
                             <h3>Medical Details</h3>
                             <hr>
                             @foreach ($prescription->medicines as $item)
@@ -73,16 +75,6 @@
                                     <br>
                                     Product Details : {{ $item->products->description ?? '' }}
                                     <br>
-                                    @php
-                                        $amazonLink = $item->products->amazon_link ?? '';
-                                        // Ensure the link has a valid scheme (http or https)
-                                        if (!preg_match('~^(?:f|ht)tps?://~i', $amazonLink)) {
-                                            $amazonLink = 'https://' . $amazonLink;
-                                        }
-                                    @endphp
-                                    Amazone Link:
-                                    <a href="{{ $amazonLink ?? '' }}" target="_blank">{{ $amazonLink ?? '' }}</a>
-                                    <br>
                                     When to take: {{ $item->to_be_taken ?? '' }} Meal
                                     <br>
                                     Time: {{ $item->time ?? '' }}
@@ -91,9 +83,8 @@
 
                                 </p>
                             @endforeach
-                        </div>
-                    </div>
-                    <div class="row">
+                        </div> --}}
+                        {{-- <div class="row"> --}}
                         <div class="col">
                             <h3>Food Plan</h3>
                             <hr>
@@ -106,8 +97,36 @@
                             </p>
 
                         </div>
+                        {{-- </div> --}}
                     </div>
+
                 </div>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div class="table table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product Name</th>
+                            {{-- <th scope="col">Product Details</th> --}}
+                            <th scope="col">When to take</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($prescription->medicines as $item)
+                            <tr>
+                                <td>{{ $item->products->product_name ?? '' }}</td>
+                                {{-- <td>{{ $item->products->description ?? '' }}</td> --}}
+                                <td>{{ $item->to_be_taken ?? '' }} Meal</td>
+                                <td>{{ $item->time ?? '' }}</td>
+                                <td>{{ $item->note ?? '' }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>

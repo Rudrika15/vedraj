@@ -29,7 +29,7 @@ class AppointmentController extends Controller
                 $q->with(['medicines' => function ($q) {
                     $q->with('products');
                 }]);
-            }])->orderBy('date', 'asc');
+            }])->orderBy('id', 'desc');
             if ($request->branch_id && $request->date) {
                 $appointments = $appointmnet->whereHas('user', function ($q) use ($request) {
                     $q->where('branch_id', $request->branch_id);
@@ -53,7 +53,7 @@ class AppointmentController extends Controller
                 }, 'user' => function ($q) {
                     $q->where('branch_id', Auth::user()->branch_id);
                 }])
-                    ->orderBy('date', 'asc')
+                    ->orderBy('id', 'desc')
                     ->where('status', '!=', 'missed')
                     ->whereHas('user')
 
@@ -159,7 +159,7 @@ class AppointmentController extends Controller
                 ->where('status', 'pending')
                 ->with(['diseases', 'user' => function ($q) use ($branch) {
                     $q->where('branch_id', $branch);
-                }])->orderBy('date', 'asc')
+                }])->orderBy('id', 'desc')
                 ->get();
 
             return Util::getSuccessMessage('Today Appointments', $appointments);
@@ -266,25 +266,28 @@ class AppointmentController extends Controller
                     $q->where('doctor_id', Auth::user()->id);
                 });
             } elseif (Auth::user()->role == 'patient') {
-                $query = User::where('id', $userId);
+                $query = User::whereHas('appointments.prescriptions')->where('id', $userId);
             } else {
-                $query = User::whereHas('appointments');
+                $query = User::whereHas('appointments.prescriptions');
             }
 
             // Apply patient name filter before fetching related data
-            if ($request->patient_name) {
+            // return $request->contact;
+            if ($request->contact) {
                 $query->whereHas('appointments', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->patient_name . '%');
+                    $q->where('contact', 'like', '%' . $request->contact);
                 });
+                // return $query->get();
             }
 
-            // Load relationships
+            // Load relationships with condition
             $query->with(['appointments' => function ($q) {
-                $q->with([
-                    'prescriptions' => function ($q) {
-                        $q->with('user', 'medicines');
-                    },
-                ]);
+                $q->whereHas('prescriptions') // This ensures only appointments with prescriptions are retrieved
+                    ->with([
+                        'prescriptions' => function ($q) {
+                            $q->with('user', 'medicines');
+                        },
+                    ]);
             }]);
 
             // Apply pagination
@@ -323,28 +326,39 @@ class AppointmentController extends Controller
                     // return $request->branch_id;
                     $prescription = Prescription::whereHas('appointment.user', function ($q) use ($request) {
                         $q->where('branch_id', $request->branch_id);
-                    })->with(['appointment' => function ($q) {
+                    })->with(['appointment' => function ($q) use ($request) {
+                        if ($request->search) {
+                            $q->where('name', 'like', '%' . $request->search . '%');
+                        }
                         $q->with(['diseases', 'user']);
                         // $q->groupBy('name');
                     }])->orderBy('id', 'desc')
                         ->paginate($perPage, ['*'], 'page', $currentPage);
-                    $filteredCollection = $prescription->getCollection()->unique(function ($item) {
-                        return $item->appointment->user->name ?? ''; // Adjust the field if needed
-                    });
+                    $filteredCollection = $prescription->getCollection()
+                        ->unique(function ($item) {
+                            return $item->appointment->name ?? ''; // Adjust the field if needed
+                        })
+                        ->values();
 
                     // Reassign the filtered collection to the paginator
                     $prescription->setCollection($filteredCollection);
                 } else {
-                    $prescription = Prescription::with(['appointment' => function ($q) use ($request) {
+                    $prescription = Prescription::whereHas('appointment', function ($q) use ($request) {
+                        if ($request->search) {
+                            $q->where('name', 'like', '%' . $request->search . '%');
+                        }
+                    })->with(['appointment' => function ($q) use ($request) {
                         $q->with([
                             'diseases',
                             'user'
                         ]);
                     }])->orderBy('id', 'desc')
                         ->paginate($perPage, ['*'], 'page', $currentPage);
-                    $filteredCollection = $prescription->getCollection()->unique(function ($item) {
-                        return $item->appointment->user->name ?? ''; // Adjust the field if needed
-                    });
+                    $filteredCollection = $prescription->getCollection()
+                        ->unique(function ($item) {
+                            return $item->appointment->name ?? ''; // Adjust the field if needed
+                        })
+                        ->values();
 
                     // Reassign the filtered collection to the paginator
                     $prescription->setCollection($filteredCollection);
@@ -362,9 +376,11 @@ class AppointmentController extends Controller
                     ->paginate($perPage, ['*'], 'page', $currentPage);
 
                 // Filter out duplicate names based on the first occurrence of the patient's name
-                $filteredCollection = $prescription->getCollection()->unique(function ($item) {
-                    return $item->appointment->user->name ?? ''; // Adjust the field if needed
-                });
+                $filteredCollection = $prescription->getCollection()
+                    ->unique(function ($item) {
+                        return $item->appointment->name ?? ''; // Adjust the field if needed
+                    })
+                    ->values();
 
                 // Reassign the filtered collection to the paginator
                 $prescription->setCollection($filteredCollection);
@@ -394,6 +410,17 @@ class AppointmentController extends Controller
                 }, 'user', 'disease'])->where('id', $id)->get();
             }
             return Util::getSuccessMessage('Prescription', $prescription);
+        } catch (\Exception $e) {
+            return Util::getErrorMessage('Something went wrong', $e);
+        }
+    }
+
+    public function deletePrescription($id)
+    {
+        try {
+            $prescription = Prescription::find($id);
+            $prescription->delete();
+            return Util::getSuccessMessage('Prescription Deleted Successfully', $prescription);
         } catch (\Exception $e) {
             return Util::getErrorMessage('Something went wrong', $e);
         }

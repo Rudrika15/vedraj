@@ -12,10 +12,18 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('diseaseProducts.diseases')->paginate(10);
-
+        if ($request->search) {
+            $products = Product::where('product_name', 'LIKE', '%' . $request->search . '%')
+                ->orWhereHas('diseaseProducts', function ($query) use ($request) {
+                    $query->whereHas('diseases', function ($query) use ($request) {
+                        $query->where('disease_name', 'LIKE', '%' . $request->search . '%');
+                    });
+                })->paginate(10);
+        } else {
+            $products = Product::with('diseaseProducts.diseases')->paginate(10);
+        }
         return view('product.index', compact('products'));
     }
 

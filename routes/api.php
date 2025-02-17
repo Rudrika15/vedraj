@@ -63,8 +63,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //Feedback and Contact Create
     Route::post('feedback', [FeedbackController::class, 'feedback']);
     Route::post('contact', [FeedbackController::class, 'contact']);
-    Route::get('generatePdf/{id}', [DiseaseController::class, 'generatePdf']);
 
     Route::get('viewPrescription/{id?}', [AppointmentController::class, 'viewPrescription']);
+    Route::get('deletePrescription/{id}', [AppointmentController::class, 'deletePrescription']);
     Route::post('profileUpdate', [AuthController::class, 'profileUpdate']);
+    Route::get('generatePdf/{id}', [DiseaseController::class, 'generatePdf']);
 });
