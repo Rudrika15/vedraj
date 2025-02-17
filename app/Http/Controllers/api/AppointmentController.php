@@ -9,6 +9,7 @@ use App\Models\Prescription;
 use App\Models\PrescriptionMedicine;
 use App\Models\User;
 use App\Utils\Util;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
@@ -198,7 +199,7 @@ class AppointmentController extends Controller
             if ($validator->fails()) {
                 return Util::getErrorMessage('Validation error', $validator->errors());
             }
-            if (Auth::user()->role != 'doctor') {
+            if (Auth::user()->role == 'customer' || Auth::user()->role == 'manager') {
                 return Util::getErrorMessage('You are not a doctor', Auth::user());
             } else {
                 if ($id != 0) {
@@ -266,28 +267,28 @@ class AppointmentController extends Controller
                     $q->where('doctor_id', Auth::user()->id);
                 });
             } elseif (Auth::user()->role == 'patient') {
-                $query = User::whereHas('appointments.prescriptions')->where('id', $userId);
+                $query = User::where('id', $userId);
             } else {
-                $query = User::whereHas('appointments.prescriptions');
+                $query = User::with('appointments');
             }
 
             // Apply patient name filter before fetching related data
             // return $request->contact;
             if ($request->contact) {
                 $query->whereHas('appointments', function ($q) use ($request) {
-                    $q->where('contact', 'like', '%' . $request->contact);
+                    $q->where('contact', 'like', '%' . $request->contact . '%');
                 });
                 // return $query->get();
             }
 
             // Load relationships with condition
             $query->with(['appointments' => function ($q) {
-                $q->whereHas('prescriptions') // This ensures only appointments with prescriptions are retrieved
-                    ->with([
-                        'prescriptions' => function ($q) {
-                            $q->with('user', 'medicines');
-                        },
-                    ]);
+                // $q->whereHas('prescriptions') // This ensures only appointments with prescriptions are retrieved
+                $q->with([
+                    'prescriptions' => function ($q) {
+                        $q->with('user', 'medicines');
+                    },
+                ]);
             }]);
 
             // Apply pagination
@@ -369,8 +370,11 @@ class AppointmentController extends Controller
                     ->whereHas('appointment.user', function ($q) {
                         $q->where('branch_id', Auth::user()->branch_id);
                     })
-                    ->with(['appointment' => function ($q) {
+                    ->with(['appointment' => function ($q) use ($request) {
                         $q->with('diseases', 'user');
+                        if ($request->search) {
+                            $q->where('name', 'like', '%' . $request->search . '%');
+                        }
                     }])
                     ->orderBy('id', 'desc')
                     ->paginate($perPage, ['*'], 'page', $currentPage);
@@ -419,7 +423,19 @@ class AppointmentController extends Controller
     {
         try {
             $prescription = Prescription::find($id);
-            $prescription->delete();
+            if (!$prescription) {
+                return Util::getErrorMessage('Prescription not found', $prescription);
+            }
+            if ($prescription->created_at >= \date('Y-m-d')) {
+                $appointment = $prescription->appointment;
+                $appointment->status = 'pending';
+                $appointment->save();
+
+                $prescription->delete();
+                PrescriptionMedicine::where('prescription_id', $id)->delete();
+            } else {
+                return Util::getErrorMessage('Prescription cannot be deleted ', $prescription);
+            }
             return Util::getSuccessMessage('Prescription Deleted Successfully', $prescription);
         } catch (\Exception $e) {
             return Util::getErrorMessage('Something went wrong', $e);
